@@ -1,0 +1,12 @@
+const express = require('express')
+const cors = require('cors')
+const app = express()
+const apiRouter = express.Router()
+const InternetAccountRouter = require('./routes/InternetAccountRouter')
+
+app.use(require('./middlewares/responseMiddleware'))
+app.use(express.json())
+app.use(cors())
+apiRouter.use('/internet-accounts', InternetAccountRouter)
+app.use('/api', apiRouter)
+app.listen(3000)

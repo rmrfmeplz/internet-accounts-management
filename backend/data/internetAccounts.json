@@ -1,0 +1,44 @@
+[
+  {
+    "id": "8596FBB3-FCE8-423C-9E9E-A122ECCE8540",
+    "platform": "test",
+    "account": "123456",
+    "createTime": 1768919880105,
+    "updateTime": 1768919880105
+  },
+  {
+    "id": "631C3637-165C-4AD8-838B-B4CDD8CE8432",
+    "platform": "qq",
+    "account": "1910181718",
+    "createTime": 1768922713102,
+    "updateTime": 1768922713102
+  },
+  {
+    "id": "16F4AA2E-692C-471D-B74F-714F72B0B0D4",
+    "platform": "weqwe",
+    "account": "eqweq",
+    "createTime": 1768922723670,
+    "updateTime": 1768922723670
+  },
+  {
+    "id": "AA5E8C08-34DD-44F6-9685-78F900A82911",
+    "platform": "qwe",
+    "account": "qeqw",
+    "createTime": 1768922856998,
+    "updateTime": 1768922856998
+  },
+  {
+    "id": "EF08362B-73F7-4404-8245-894B3B942245",
+    "platform": "qeqwe",
+    "account": "qweqweq",
+    "createTime": 1768922957222,
+    "updateTime": 1768922957222
+  },
+  {
+    "id": "DB8798A1-3B20-4DBA-A3B9-3773E60CC5A7",
+    "platform": "微信",
+    "account": "qweqweasdqw",
+    "createTime": 1768924399223,
+    "updateTime": 1768924399223
+  }
+]

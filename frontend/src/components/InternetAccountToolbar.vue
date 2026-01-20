@@ -1,29 +1,43 @@
 <script setup>
 import {ref} from 'vue'
 import {useNotification} from 'naive-ui'
+import {createInternetAccount} from '@/api/modules/internet-account-api.js'
 
 const notification = useNotification()
 const showAddInternetAccountModal = ref(false)
 const internetAccount = ref({platform: '', account: ''})
 
+function retInfoObj(title, content) {
+  return {title, content, duration: 10000, keepAliveOnHover: true}
+}
+
 function onCancelAddInternetAccount() {
   showAddInternetAccountModal.value = false
 }
 
-function onConfirmAddInternetAccount() {
-  if (!internetAccount.value.platform) {
-    notification.error({
-      content: "说点啥呢",
-      meta: "想不出来",
-      duration: 2500,
-      keepAliveOnHover: true
-    })
+async function onConfirmAddInternetAccount() {
+  const platform = String(internetAccount.value.platform).trim()
+  if (!platform) {
+    notification.error(retInfoObj('Error!', '请输入平台名称'))
     return
+  }
+  const account = String(internetAccount.value.account).trim()
+  if (!account) {
+    notification.error(retInfoObj('Error!', '请输入对应账号'))
+    return
+  }
+  const {code, message} = await createInternetAccount({platform, account})
+  if (code) {
+    notification.success(retInfoObj('Success!', `平台 ${platform} 的账号 ${account} 已保存`))
+  } else {
+    notification.error(retInfoObj('Error!', message))
   }
   showAddInternetAccountModal.value = false
 }
 
 function addInternetAccount() {
+  internetAccount.value.platform = ''
+  internetAccount.value.account = ''
   showAddInternetAccountModal.value = true
 }
 </script>
