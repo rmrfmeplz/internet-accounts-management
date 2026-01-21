@@ -7,34 +7,17 @@ function createInternetAccount(req, resp) {
     }
     try {
         internetAccountService.createInternetAccount(platformName.trim(), account.trim())
+        return resp.success(null)
     } catch (err) {
         return resp.fail(err.message)
     }
-    return resp.success(null)
-}
-
-function deleteInternetAccountById() {
-}
-
-function updateInternetAccountById() {
-}
-
-function getInternetAccountById() {
 }
 
 function listInternetAccounts(req, resp) {
     return resp.success(internetAccountService.listInternetAccounts())
 }
 
-function pageInternetAccounts() {
-}
-
-// noinspection JSUnusedGlobalSymbols
 module.exports = {
     createInternetAccount,
-    deleteInternetAccountById,
-    updateInternetAccountById,
-    getInternetAccountById,
     listInternetAccounts,
-    pageInternetAccounts
 }

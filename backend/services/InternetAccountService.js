@@ -11,28 +11,11 @@ function createInternetAccount(platformName, account) {
     internetAccountDao.saveInternetAccount({id, platformName, account, createTime, updateTime})
 }
 
-function deleteInternetAccountById() {
-}
-
-function updateInternetAccountById() {
-}
-
-function getInternetAccountById() {
-}
-
 function listInternetAccounts() {
     return internetAccountDao.listAllInternetAccounts()
 }
 
-function pageInternetAccounts() {
-}
-
-// noinspection JSUnusedGlobalSymbols
 module.exports = {
     createInternetAccount,
-    deleteInternetAccountById,
-    updateInternetAccountById,
-    getInternetAccountById,
     listInternetAccounts,
-    pageInternetAccounts
 }
