@@ -2,7 +2,9 @@
 import {ref} from 'vue'
 import {useNotification} from 'naive-ui'
 import {createInternetAccount} from '@/api/modules/internet-account-api.js'
+import {useInternetAccountsStore} from '@/store/internetAccounts.js'
 
+const internetAccountsStore = useInternetAccountsStore()
 const notification = useNotification()
 const showAddInternetAccountModal = ref(false)
 const internetAccount = ref({platform: '', account: ''})
@@ -28,7 +30,8 @@ async function onConfirmAddInternetAccount() {
   }
   const {code, message} = await createInternetAccount({platform, account})
   if (code) {
-    notification.success(retInfoObj('Success!', `平台 ${platform} 的账号 ${account} 已保存`))
+    await internetAccountsStore.fetchInternetAccounts()
+    notification.success(retInfoObj('Success!', `平台 ${platform} 的账号 ${account} 已保存。`))
   } else {
     notification.error(retInfoObj('Error!', message))
   }

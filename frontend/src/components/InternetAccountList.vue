@@ -1,14 +1,8 @@
 <script setup>
-import {ref} from 'vue'
-import {listInternetAccounts} from '@/api/modules/internet-account-api.js'
+import {useInternetAccountsStore} from '@/store/internetAccounts.js'
 
-const internetAccounts = ref([])
-fetchInternetAccounts()
-
-async function fetchInternetAccounts() {
-  const {data} = await listInternetAccounts()
-  internetAccounts.value = data
-}
+const internetAccountsStore = useInternetAccountsStore()
+internetAccountsStore.fetchInternetAccounts()
 </script>
 
 
@@ -23,7 +17,7 @@ async function fetchInternetAccounts() {
     </tr>
     </thead>
     <tbody>
-    <tr v-for="internetAccount in internetAccounts" :key="internetAccount.id">
+    <tr v-for="internetAccount in internetAccountsStore.internetAccounts" :key="internetAccount.id">
       <td>{{ internetAccount.platform }}</td>
       <td>{{ internetAccount.account }}</td>
       <td>
