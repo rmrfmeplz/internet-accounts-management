@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "C3663294-9BC2-4CC2-B2D8-3D98EC23591B",
+    "platformName": "test",
+    "account": "123456",
+    "createTime": 1768979536992,
+    "updateTime": 1768979536992
+  },
+  {
+    "id": "D3231C0F-FD97-4A3C-A19B-FC21A3C87887",
+    "platformName": "demo",
+    "account": "123456",
+    "createTime": 1768979696863,
+    "updateTime": 1768979696863
+  }
+]
