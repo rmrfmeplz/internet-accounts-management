@@ -6,8 +6,10 @@ import InternetAccountToolbar from '@/components/InternetAccountToolbar.vue'
 <template>
   <n-notification-provider>
     <main>
-      <InternetAccountToolbar/>
-      <InternetAccountList/>
+      <n-flex>
+        <InternetAccountToolbar/>
+        <InternetAccountList/>
+      </n-flex>
     </main>
   </n-notification-provider>
 </template>
