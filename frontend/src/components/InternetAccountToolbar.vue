@@ -7,9 +7,9 @@ import {useInternetAccountsStore} from '@/store/internetAccounts.js'
 const internetAccountsStore = useInternetAccountsStore()
 const notification = useNotification()
 const showAddInternetAccountModal = ref(false)
-const internetAccount = ref({platform: '', account: ''})
+const internetAccount = ref({platformName: '', account: ''})
 
-function retInfoObj(title, content) {
+function retMsgObj(title, content) {
   return {title, content, duration: 10000, keepAliveOnHover: true}
 }
 
@@ -18,28 +18,28 @@ function onCancelAddInternetAccount() {
 }
 
 async function onConfirmAddInternetAccount() {
-  const platform = String(internetAccount.value.platform).trim()
-  if (!platform) {
-    notification.error(retInfoObj('Error!', '请输入平台名称'))
+  const platformName = String(internetAccount.value.platformName).trim()
+  if (!platformName) {
+    notification.error(retMsgObj('Error!', '请输入平台名称'))
     return
   }
   const account = String(internetAccount.value.account).trim()
   if (!account) {
-    notification.error(retInfoObj('Error!', '请输入对应账号'))
+    notification.error(retMsgObj('Error!', '请输入对应账号'))
     return
   }
-  const {code, message} = await createInternetAccount({platform, account})
+  const {code, message} = await createInternetAccount({platformName, account})
   if (code) {
     await internetAccountsStore.fetchInternetAccounts()
-    notification.success(retInfoObj('Success!', `平台 ${platform} 的账号 ${account} 已保存。`))
+    notification.success(retMsgObj('Success!', `平台 ${platformName} 的账号 ${account} 已保存`))
   } else {
-    notification.error(retInfoObj('Error!', message))
+    notification.error(retMsgObj('Error!', message))
   }
   showAddInternetAccountModal.value = false
 }
 
 function addInternetAccount() {
-  internetAccount.value.platform = ''
+  internetAccount.value.platformName = ''
   internetAccount.value.account = ''
   showAddInternetAccountModal.value = true
 }
@@ -57,7 +57,7 @@ function addInternetAccount() {
       preset="dialog"
   >
     <n-flex vertical>
-      <n-input v-model:value="internetAccount.platform" placeholder="请输入平台名称"/>
+      <n-input v-model:value="internetAccount.platformName" placeholder="请输入平台名称"/>
       <n-input v-model:value="internetAccount.account" placeholder="请输入对应账号"/>
       <n-flex justify="end">
         <n-button @click="onCancelAddInternetAccount">取消</n-button>

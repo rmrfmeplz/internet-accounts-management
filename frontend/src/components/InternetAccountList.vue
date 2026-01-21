@@ -18,7 +18,7 @@ internetAccountsStore.fetchInternetAccounts()
     </thead>
     <tbody>
     <tr v-for="internetAccount in internetAccountsStore.internetAccounts" :key="internetAccount.id">
-      <td>{{ internetAccount.platform }}</td>
+      <td>{{ internetAccount.platformName }}</td>
       <td>{{ internetAccount.account }}</td>
       <td>
         <n-time :time="internetAccount.createTime"/>
