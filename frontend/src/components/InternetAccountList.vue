@@ -1,8 +1,11 @@
 <script setup>
 import {useInternetAccountsStore} from '@/store/internetAccounts.js'
+import {usePlatformIconMapsStore} from '@/store/platformIconMaps.js'
 
 const internetAccountsStore = useInternetAccountsStore()
+const platformIconMapsStore = usePlatformIconMapsStore()
 internetAccountsStore.fetchInternetAccounts()
+platformIconMapsStore.fetchPlatformIconMaps()
 </script>
 
 
@@ -18,7 +21,16 @@ internetAccountsStore.fetchInternetAccounts()
     </thead>
     <tbody>
     <tr v-for="internetAccount in internetAccountsStore.internetAccounts" :key="internetAccount.id">
-      <td>{{ internetAccount.platformName }}</td>
+      <td>
+        <n-flex align="center">
+          <n-avatar v-if="internetAccount.platformName in platformIconMapsStore.platformIconMaps"
+                    :src="platformIconMapsStore.platformIconMaps[internetAccount.platformName]"
+                    size="small"
+                    round
+          />
+          <span>{{ internetAccount.platformName }}</span>
+        </n-flex>
+      </td>
       <td>{{ internetAccount.account }}</td>
       <td>
         <n-time :time="internetAccount.createTime"/>

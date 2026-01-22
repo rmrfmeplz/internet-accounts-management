@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "id": "D5BB824C-A2DB-4796-BC5C-2C7CD910321E",
+    "platformName": "demo1",
+    "account": "123456",
+    "createTime": 1769069090475,
+    "updateTime": 1769069090475
+  },
+  {
+    "id": "B96A4B03-0665-42B0-92AA-EBC1A08D0C11",
+    "platformName": "demo2",
+    "account": "123456",
+    "createTime": 1769069285403,
+    "updateTime": 1769069285403
+  },
+  {
+    "id": "A6AAEBD1-44AB-449D-904C-2AE810A036CD",
+    "platformName": "demo3",
+    "account": "123456",
+    "createTime": 1769069299905,
+    "updateTime": 1769069299905
+  },
+  {
+    "id": "60A369C8-3883-446C-947D-EF121B7B7E13",
+    "platformName": "demo4",
+    "account": "123456",
+    "createTime": 1769069312434,
+    "updateTime": 1769069312434
+  },
+  {
+    "id": "B1267584-3462-4751-BC91-64A34C61A0B8",
+    "platformName": "demo5",
+    "account": "123456",
+    "createTime": 1769069325100,
+    "updateTime": 1769069325100
+  }
+]

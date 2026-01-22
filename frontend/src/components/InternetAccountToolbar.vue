@@ -3,11 +3,13 @@ import {ref} from 'vue'
 import {useNotification} from 'naive-ui'
 import {createInternetAccount} from '@/api/modules/internet-account-api.js'
 import {useInternetAccountsStore} from '@/store/internetAccounts.js'
+import {usePlatformIconMapsStore} from '@/store/platformIconMaps.js'
 
 const internetAccountsStore = useInternetAccountsStore()
+const platformIconMapsStore = usePlatformIconMapsStore()
 const notification = useNotification()
 const showAddInternetAccountModal = ref(false)
-const internetAccount = ref({platformName: '', account: ''})
+const internetAccount = ref({platformName: '', account: '', platformIcon: ''})
 
 function retMsgObj(title, content) {
   return {title, content, duration: 10000, keepAliveOnHover: true}
@@ -28,9 +30,11 @@ async function onConfirmAddInternetAccount() {
     notification.error(retMsgObj('Error!', '请输入对应账号'))
     return
   }
-  const {code, message} = await createInternetAccount({platformName, account})
+  const platformIcon = internetAccount.value.platformIcon
+  const {code, message} = await createInternetAccount({platformName, account, platformIcon})
   if (code) {
     await internetAccountsStore.fetchInternetAccounts()
+    await platformIconMapsStore.fetchPlatformIconMaps()
     notification.success(retMsgObj('Success!', `平台 ${platformName} 的账号 ${account} 已保存`))
   } else {
     notification.error(retMsgObj('Error!', message))
@@ -41,7 +45,16 @@ async function onConfirmAddInternetAccount() {
 function addInternetAccount() {
   internetAccount.value.platformName = ''
   internetAccount.value.account = ''
+  internetAccount.value.platformIcon = ''
   showAddInternetAccountModal.value = true
+}
+
+function validatePlatformIconBeforeUpload(file) {
+  // TODO 校验文件格式
+
+  const reader = new FileReader()
+  reader.onload = e => internetAccount.value.platformIcon = e.target.result
+  reader.readAsDataURL(file.file.file)
 }
 </script>
 
@@ -59,6 +72,9 @@ function addInternetAccount() {
     <n-flex vertical>
       <n-input v-model:value="internetAccount.platformName" placeholder="请输入平台名称"/>
       <n-input v-model:value="internetAccount.account" placeholder="请输入对应账号"/>
+      <n-upload list-type="image-card" :max="1" :on-before-upload="validatePlatformIconBeforeUpload">
+        点击上传平台图标（可选）
+      </n-upload>
       <n-flex justify="end">
         <n-button @click="onCancelAddInternetAccount">取消</n-button>
         <n-button type="primary" @click="onConfirmAddInternetAccount">确认</n-button>
