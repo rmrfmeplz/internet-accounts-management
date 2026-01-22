@@ -46,6 +46,7 @@ function addInternetAccount() {
   internetAccount.value.platformName = ''
   internetAccount.value.account = ''
   internetAccount.value.platformIcon = ''
+  isUploadPlatformIconEntryVisible.value = true
   showAddInternetAccountModal.value = true
 }
 
@@ -56,6 +57,20 @@ function validatePlatformIconBeforeUpload(file) {
   reader.onload = e => internetAccount.value.platformIcon = e.target.result
   reader.readAsDataURL(file.file.file)
 }
+
+function getPlatformIcon() {
+  const platformIcon = platformIconMapsStore.platformIconMaps[internetAccount.value.platformName]
+  if (platformIcon) {
+    isUploadPlatformIconEntryVisible.value = false
+    internetAccount.value.platformIcon = ''
+    uploadedPlatformIconSrc.value = platformIcon
+  } else {
+    isUploadPlatformIconEntryVisible.value = true
+  }
+}
+
+const isUploadPlatformIconEntryVisible = ref(true)
+const uploadedPlatformIconSrc = ref('')
 </script>
 
 
@@ -70,11 +85,13 @@ function validatePlatformIconBeforeUpload(file) {
       preset="dialog"
   >
     <n-flex vertical>
-      <n-input v-model:value="internetAccount.platformName" placeholder="请输入平台名称"/>
+      <n-input v-model:value="internetAccount.platformName" placeholder="请输入平台名称" @blur="getPlatformIcon"/>
       <n-input v-model:value="internetAccount.account" placeholder="请输入对应账号"/>
-      <n-upload list-type="image-card" :max="1" :on-before-upload="validatePlatformIconBeforeUpload">
+      <n-upload list-type="image-card" :max="1" :on-before-upload="validatePlatformIconBeforeUpload"
+                v-show="isUploadPlatformIconEntryVisible">
         点击上传平台图标（可选）
       </n-upload>
+      <n-image width="95" :src="uploadedPlatformIconSrc" v-show="!isUploadPlatformIconEntryVisible" preview-disabled/>
       <n-flex justify="end">
         <n-button @click="onCancelAddInternetAccount">取消</n-button>
         <n-button type="primary" @click="onConfirmAddInternetAccount">确认</n-button>
