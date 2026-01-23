@@ -102,11 +102,7 @@ const uploadedPlatformIconSrc = ref('')
       <n-input v-model:value="internetAccount.remark" placeholder="请输入备注信息（可选）"/>
       <n-upload list-type="image-card" :max="1" :on-before-upload="validatePlatformIconBeforeUpload"
                 v-show="isUploadPlatformIconEntryVisible">
-        <n-flex justify="center">
-          <span>点击上传</span>
-          <span>平台图标</span>
-          <span>（可选）</span>
-        </n-flex>
+        点击上传<br>平台图标<br>（可选）
       </n-upload>
       <n-image width="95" :src="uploadedPlatformIconSrc" v-show="!isUploadPlatformIconEntryVisible" preview-disabled/>
       <n-flex justify="end">
