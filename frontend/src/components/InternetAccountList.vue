@@ -1,7 +1,7 @@
 <script setup>
 import {useInternetAccountsStore} from '@/store/internetAccounts.js'
 import {usePlatformIconMapsStore} from '@/store/platformIconMaps.js'
-import {EditNoteFilled, DeleteSweepOutlined} from '@vicons/material'
+import {EditNoteFilled, DeleteSweepOutlined, AccountCircleTwotone} from '@vicons/material'
 import {deleteInternetAccountById} from '@/api/modules/internet-account-api.js'
 import {useDialog} from 'naive-ui'
 
@@ -43,6 +43,17 @@ function deleteInternetAccount(internetAccount) {
     </tr>
     </thead>
     <tbody>
+    <tr v-if="!internetAccountsStore.internetAccounts.length">
+      <td colspan="6">
+        <n-empty description="暂未添加互联网账号" size="huge">
+          <template #icon>
+            <n-icon>
+              <AccountCircleTwotone/>
+            </n-icon>
+          </template>
+        </n-empty>
+      </td>
+    </tr>
     <tr v-for="internetAccount in internetAccountsStore.internetAccounts" :key="internetAccount.id">
       <td>
         <n-flex align="center">
