@@ -34,11 +34,11 @@ function deleteInternetAccount(internetAccount) {
   <n-table :single-line="false">
     <thead>
     <tr>
-      <th>所属平台</th>
-      <th>账号名称</th>
+      <th>平台</th>
+      <th>账号</th>
       <th>备注</th>
       <th>创建时间</th>
-      <th>最后更新时间</th>
+      <th>更新时间</th>
       <th>操作</th>
     </tr>
     </thead>
