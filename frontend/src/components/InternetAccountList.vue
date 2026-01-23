@@ -31,7 +31,7 @@ function deleteInternetAccount(internetAccount) {
 
 
 <template>
-  <n-table :single-line="false" class="table">
+  <n-table :single-line="false">
     <thead>
     <tr>
       <th>所属平台</th>
@@ -44,7 +44,7 @@ function deleteInternetAccount(internetAccount) {
     <tbody>
     <tr v-for="internetAccount in internetAccountsStore.internetAccounts" :key="internetAccount.id">
       <td>
-        <n-flex align="center" justify="center">
+        <n-flex align="center">
           <n-avatar v-if="internetAccount.platformName in platformIconMapsStore.platformIconMaps"
                     :src="platformIconMapsStore.platformIconMaps[internetAccount.platformName]"
                     size="small"
@@ -83,10 +83,6 @@ function deleteInternetAccount(internetAccount) {
 
 
 <style scoped>
-.table {
-  text-align: center;
-}
-
 th {
   font-weight: bold;
 }
