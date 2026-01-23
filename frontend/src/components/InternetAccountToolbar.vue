@@ -50,9 +50,19 @@ function addInternetAccount() {
   showAddInternetAccountModal.value = true
 }
 
-function validatePlatformIconBeforeUpload(file) {
-  // TODO 校验文件格式
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
+const ALLOWED_IMAGE_SUFFIXS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']
+const ALLOWED_IMAGE_SIZE = 2 * 1024 * 1024
 
+function validatePlatformIconBeforeUpload(file) {
+  if (!ALLOWED_IMAGE_TYPES.includes(file.file.type)) {
+    notification.error(retMsgObj('Error!', `仅支持上传 ${ALLOWED_IMAGE_SUFFIXS.join('、').toUpperCase()} 格式的图片`))
+    return false
+  }
+  if (file.file.file.size > ALLOWED_IMAGE_SIZE) {
+    notification.error(retMsgObj('Error!', `仅支持上传 ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB 及以下的图片`))
+    return false
+  }
   const reader = new FileReader()
   reader.onload = e => internetAccount.value.platformIcon = e.target.result
   reader.readAsDataURL(file.file.file)
