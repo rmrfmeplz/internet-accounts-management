@@ -5,6 +5,7 @@ function createInternetAccount(req, resp) {
     if (platformName === undefined || platformName === null ||
         account === undefined || account == null ||
         platformIcon === undefined || platformIcon === null ||
+        typeof platformName !== 'string' || typeof account !== 'string' || typeof platformIcon !== 'string' ||
         !platformName.trim() || !account.trim()) {
         return resp.fail('参数错误，请检查输入的参数是否合法、完整。')
     }
