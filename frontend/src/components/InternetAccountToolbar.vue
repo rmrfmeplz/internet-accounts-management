@@ -9,7 +9,7 @@ const internetAccountsStore = useInternetAccountsStore()
 const platformIconMapsStore = usePlatformIconMapsStore()
 const notification = useNotification()
 const showAddInternetAccountModal = ref(false)
-const internetAccount = ref({platformName: '', account: '', platformIcon: ''})
+const internetAccount = ref({platformName: '', account: '', platformIcon: '', remark: ''})
 
 function retMsgObj(title, content) {
   return {title, content, duration: 10000, keepAliveOnHover: true}
@@ -31,7 +31,8 @@ async function onConfirmAddInternetAccount() {
     return
   }
   const platformIcon = internetAccount.value.platformIcon
-  const {code, message} = await createInternetAccount({platformName, account, platformIcon})
+  const remark = internetAccount.value.remark
+  const {code, message} = await createInternetAccount({platformName, account, platformIcon, remark})
   if (code) {
     await internetAccountsStore.fetchInternetAccounts()
     await platformIconMapsStore.fetchPlatformIconMaps()
@@ -46,6 +47,7 @@ function addInternetAccount() {
   internetAccount.value.platformName = ''
   internetAccount.value.account = ''
   internetAccount.value.platformIcon = ''
+  internetAccount.value.remark = ''
   isUploadPlatformIconEntryVisible.value = true
   showAddInternetAccountModal.value = true
 }
@@ -97,6 +99,7 @@ const uploadedPlatformIconSrc = ref('')
     <n-flex vertical>
       <n-input v-model:value="internetAccount.platformName" placeholder="请输入平台名称" @blur="getPlatformIcon"/>
       <n-input v-model:value="internetAccount.account" placeholder="请输入对应账号"/>
+      <n-input v-model:value="internetAccount.remark" placeholder="请输入备注信息（可选）"/>
       <n-upload list-type="image-card" :max="1" :on-before-upload="validatePlatformIconBeforeUpload"
                 v-show="isUploadPlatformIconEntryVisible">
         点击上传平台图标（可选）

@@ -2,14 +2,14 @@ const {v4} = require('uuid')
 const internetAccountDao = require('../dao/InternetAccountDao')
 const platformIconMapDao = require('../dao/PlatformIconMapDao')
 
-function createInternetAccount(platformName, account, platformIcon) {
+function createInternetAccount(platformName, account, platformIcon, remark) {
     const internetAccounts = internetAccountDao.listAllInternetAccounts()
     const isDuplicate = internetAccounts.some(internetAccount => internetAccount['platformName'] === platformName && internetAccount['account'] === account)
     if (isDuplicate) throw new Error(`检测到重复数据：平台 ${platformName} 下的账号 ${account} 已存在`)
     const id = v4().toUpperCase()
     const createTime = Date.now()
     const updateTime = createTime
-    internetAccountDao.saveInternetAccount({id, platformName, account, createTime, updateTime})
+    internetAccountDao.saveInternetAccount({id, platformName, account, remark, createTime, updateTime})
     if (platformIcon) platformIconMapDao.savePlatformIconMap(platformName, platformIcon)
 }
 

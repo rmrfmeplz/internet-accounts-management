@@ -5,11 +5,12 @@ const ALLOWED_IMAGE_SIZE = 2 * 1024 * 1024
 const ALLOWED_IMAGE_BASE64_SIZE = Math.floor(ALLOWED_IMAGE_SIZE * 1.33 * 1.1)
 
 function createInternetAccount(req, resp) {
-    const {platformName, account, platformIcon} = req.body
+    const {platformName, account, platformIcon, remark} = req.body
     if (platformName === undefined || platformName === null ||
         account === undefined || account == null ||
         platformIcon === undefined || platformIcon === null ||
-        typeof platformName !== 'string' || typeof account !== 'string' || typeof platformIcon !== 'string' ||
+        remark === undefined || remark === null ||
+        typeof platformName !== 'string' || typeof account !== 'string' || typeof platformIcon !== 'string' || typeof remark !== 'string' ||
         !platformName.trim() || !account.trim()) {
         return resp.fail('参数错误，请检查输入的参数是否合法、完整。')
     }
@@ -29,7 +30,7 @@ function createInternetAccount(req, resp) {
         if (data.length > ALLOWED_IMAGE_SIZE) return resp.fail(`仅支持上传 ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB 及以下的图片`)
     }
     try {
-        internetAccountService.createInternetAccount(platformName.trim(), account.trim(), platformIcon)
+        internetAccountService.createInternetAccount(platformName.trim(), account.trim(), platformIcon, remark)
         return resp.success(null)
     } catch (err) {
         return resp.fail(err.message)

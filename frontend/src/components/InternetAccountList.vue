@@ -36,6 +36,7 @@ function deleteInternetAccount(internetAccount) {
     <tr>
       <th>所属平台</th>
       <th>账号名称</th>
+      <th>备注</th>
       <th>创建时间</th>
       <th>最后更新时间</th>
       <th>操作</th>
@@ -54,6 +55,7 @@ function deleteInternetAccount(internetAccount) {
         </n-flex>
       </td>
       <td>{{ internetAccount.account }}</td>
+      <td>{{ internetAccount.remark || "暂无备注信息" }}</td>
       <td>
         <n-time :time="internetAccount.createTime"/>
       </td>
