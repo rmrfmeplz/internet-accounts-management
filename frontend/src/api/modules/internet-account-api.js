@@ -7,3 +7,7 @@ export function createInternetAccount(internetAccount) {
 export function listInternetAccounts() {
     return request.get('/internet-accounts')
 }
+
+export function deleteInternetAccountById(id) {
+    return request.delete(`/internet-accounts/${id}`)
+}

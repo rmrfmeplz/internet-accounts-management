@@ -1,16 +1,1 @@
-[
-  {
-    "id": "42353373-6DA7-4460-96F2-57E2D87B8F68",
-    "platformName": "demo1",
-    "account": "demo1",
-    "createTime": 1769148680947,
-    "updateTime": 1769148680947
-  },
-  {
-    "id": "5B3B0AE5-9C32-498A-92CA-B26272F2420E",
-    "platformName": "demo2",
-    "account": "demo2",
-    "createTime": 1769148816452,
-    "updateTime": 1769148816452
-  }
-]
+[]

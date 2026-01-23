@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vicons/material": "^0.13.0",
     "axios": "^1.13.2",
     "pinia": "^3.0.4",
     "uuid": "^13.0.0",

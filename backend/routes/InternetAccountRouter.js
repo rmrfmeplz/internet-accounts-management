@@ -3,5 +3,6 @@ const InternetAccountController = require('../controllers/InternetAccountControl
 
 internetAccountRouter.post('/', InternetAccountController.createInternetAccount)
 internetAccountRouter.get('/', InternetAccountController.listInternetAccounts)
+internetAccountRouter.delete('/:id', InternetAccountController.deleteInternetAccountById)
 
 module.exports = internetAccountRouter

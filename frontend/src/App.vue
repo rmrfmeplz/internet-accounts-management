@@ -4,14 +4,16 @@ import InternetAccountToolbar from '@/components/InternetAccountToolbar.vue'
 </script>
 
 <template>
-  <n-notification-provider>
-    <main>
-      <n-flex>
-        <InternetAccountToolbar/>
-        <InternetAccountList/>
-      </n-flex>
-    </main>
-  </n-notification-provider>
+  <n-dialog-provider>
+    <n-notification-provider>
+      <main>
+        <n-flex>
+          <InternetAccountToolbar/>
+          <InternetAccountList/>
+        </n-flex>
+      </main>
+    </n-notification-provider>
+  </n-dialog-provider>
 </template>
 
 <style scoped>

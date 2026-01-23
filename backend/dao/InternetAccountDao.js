@@ -12,7 +12,26 @@ function listAllInternetAccounts() {
     return JSON.parse(jsonStr)
 }
 
+function deleteInternetAccountById(id) {
+    let internetAccounts = listAllInternetAccounts()
+    internetAccounts = internetAccounts.filter(internetAccount => internetAccount.id !== id)
+    fs.writeFileSync(path.join(__dirname, '../data/internetAccounts.json'), JSON.stringify(internetAccounts, null, 2), 'utf8')
+}
+
+function findInternetAccountById(id) {
+    const internetAccounts = listAllInternetAccounts()
+    return internetAccounts.find(internetAccount => internetAccount.id === id)
+}
+
+function findInternetAccountsByPlatformName(platformName) {
+    const internetAccounts = listAllInternetAccounts()
+    return internetAccounts.filter(internetAccount => internetAccount.platformName === platformName)
+}
+
 module.exports = {
     saveInternetAccount,
     listAllInternetAccounts,
+    deleteInternetAccountById,
+    findInternetAccountById,
+    findInternetAccountsByPlatformName
 }

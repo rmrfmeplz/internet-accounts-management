@@ -40,7 +40,17 @@ function listInternetAccounts(req, resp) {
     return resp.success(internetAccountService.listInternetAccounts())
 }
 
+function deleteInternetAccountById(req, resp) {
+    try {
+        internetAccountService.deleteInternetAccountById(req.params.id)
+        return resp.success(null)
+    } catch (err) {
+        return resp.fail(err.message)
+    }
+}
+
 module.exports = {
     createInternetAccount,
     listInternetAccounts,
+    deleteInternetAccountById
 }
