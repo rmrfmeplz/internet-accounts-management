@@ -6,7 +6,7 @@ const internetAccountRouter = require('./routes/InternetAccountRouter')
 const platformIconMapRouter = require('./routes/PlatformIconMapRouter')
 
 app.use(require('./middlewares/responseMiddleware'))
-app.use(express.json({limit: '5mb'}))
+app.use(express.json({limit: '10mb'}))
 app.use(cors())
 apiRouter.use('/internet-accounts', internetAccountRouter)
 apiRouter.use('/platform-icon-maps', platformIconMapRouter)

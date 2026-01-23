@@ -50,8 +50,8 @@ function addInternetAccount() {
   showAddInternetAccountModal.value = true
 }
 
-const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
-const ALLOWED_IMAGE_SUFFIXS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']
+const ALLOWED_IMAGE_TYPES = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/webp']
+const ALLOWED_IMAGE_SUFFIXS = ['jpg', 'jpeg', 'png', 'gif', 'webp']
 const ALLOWED_IMAGE_SIZE = 2 * 1024 * 1024
 
 function validatePlatformIconBeforeUpload(file) {
