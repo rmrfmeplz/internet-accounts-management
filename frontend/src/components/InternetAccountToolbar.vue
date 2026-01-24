@@ -22,12 +22,12 @@ function onCancelAddInternetAccount() {
 async function onConfirmAddInternetAccount() {
   const platformName = String(internetAccount.value.platformName).trim()
   if (!platformName) {
-    notification.error(retMsgObj('Error!', '请输入平台名称'))
+    notification.error(retMsgObj('Error!', 'Please enter the platform name'))
     return
   }
   const account = String(internetAccount.value.account).trim()
   if (!account) {
-    notification.error(retMsgObj('Error!', '请输入对应账号'))
+    notification.error(retMsgObj('Error!', 'Please enter the corresponding account'))
     return
   }
   const platformIcon = internetAccount.value.platformIcon
@@ -36,7 +36,7 @@ async function onConfirmAddInternetAccount() {
   if (code) {
     await internetAccountsStore.fetchInternetAccounts()
     await platformIconMapsStore.fetchPlatformIconMaps()
-    notification.success(retMsgObj('Success!', `平台 ${platformName} 的账号 ${account} 已保存`))
+    notification.success(retMsgObj('Success!', `The account ${account} for platform ${platformName} has been saved`))
   } else {
     notification.error(retMsgObj('Error!', message))
   }
@@ -58,11 +58,11 @@ const ALLOWED_IMAGE_SIZE = 2 * 1024 * 1024
 
 function validatePlatformIconBeforeUpload(file) {
   if (!ALLOWED_IMAGE_TYPES.includes(file.file.type)) {
-    notification.error(retMsgObj('Error!', `仅支持上传 ${ALLOWED_IMAGE_SUFFIXS.join('、').toUpperCase()} 格式的图片`))
+    notification.error(retMsgObj('Error!', `Only supports uploading images in the formats of ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()}`))
     return false
   }
   if (file.file.file.size > ALLOWED_IMAGE_SIZE) {
-    notification.error(retMsgObj('Error!', `仅支持上传 ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB 及以下的图片`))
+    notification.error(retMsgObj('Error!', `Only supports uploading images of ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB or smaller`))
     return false
   }
   const reader = new FileReader()
@@ -87,7 +87,7 @@ const uploadedPlatformIconSrc = ref('')
 
 
 <template>
-  <n-button type="primary" @click="addInternetAccount">新增互联网账号</n-button>
+  <n-button type="primary" @click="addInternetAccount">New Internet Account</n-button>
   <n-modal
       v-model:show="showAddInternetAccountModal"
       :close-on-esc="false"
@@ -97,17 +97,17 @@ const uploadedPlatformIconSrc = ref('')
       preset="dialog"
   >
     <n-flex vertical>
-      <n-input v-model:value="internetAccount.platformName" placeholder="请输入平台名称" @blur="getPlatformIcon"/>
-      <n-input v-model:value="internetAccount.account" placeholder="请输入对应账号"/>
-      <n-input v-model:value="internetAccount.remark" placeholder="请输入备注信息（可选）"/>
+      <n-input v-model:value="internetAccount.platformName" placeholder="Enter platform name" @blur="getPlatformIcon"/>
+      <n-input v-model:value="internetAccount.account" placeholder="Enter corresponding account"/>
+      <n-input v-model:value="internetAccount.remark" placeholder="Enter remarks (optional)"/>
       <n-upload list-type="image-card" :max="1" :on-before-upload="validatePlatformIconBeforeUpload"
                 v-show="isUploadPlatformIconEntryVisible">
-        点击上传<br>平台图标<br>（可选）
+        Upload platform icon (optional)
       </n-upload>
       <n-image width="95" :src="uploadedPlatformIconSrc" v-show="!isUploadPlatformIconEntryVisible" preview-disabled/>
       <n-flex justify="end">
-        <n-button @click="onCancelAddInternetAccount">取消</n-button>
-        <n-button type="primary" @click="onConfirmAddInternetAccount">确认</n-button>
+        <n-button @click="onCancelAddInternetAccount">Cancel</n-button>
+        <n-button type="primary" @click="onConfirmAddInternetAccount">Confirm</n-button>
       </n-flex>
     </n-flex>
   </n-modal>

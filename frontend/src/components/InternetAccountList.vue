@@ -13,10 +13,10 @@ platformIconMapsStore.fetchPlatformIconMaps()
 
 function deleteInternetAccount(internetAccount) {
   dialog.warning({
-    title: '警告！',
-    content: `你确定要删除平台 ${internetAccount.platformName} 下的账号 ${internetAccount.account} 吗？`,
-    positiveText: '确认删除',
-    negativeText: '取消',
+    title: 'Warning!',
+    content: `Are you sure you want to delete the account ${internetAccount.account} under the platform ${internetAccount.platformName}?`,
+    positiveText: 'Confirm Deletion',
+    negativeText: 'Cancel',
     closable: false,
     closeOnEsc: false,
     maskClosable: false,
@@ -34,18 +34,18 @@ function deleteInternetAccount(internetAccount) {
   <n-table :single-line="false">
     <thead>
     <tr>
-      <th>平台</th>
-      <th>账号</th>
-      <th>备注</th>
-      <th>创建时间</th>
-      <th>更新时间</th>
-      <th>操作</th>
+      <th>Platform</th>
+      <th>Account</th>
+      <th>Remarks</th>
+      <th>Creation Time</th>
+      <th>Update Time</th>
+      <th>Operations</th>
     </tr>
     </thead>
     <tbody>
     <tr v-if="!internetAccountsStore.internetAccounts.length">
       <td colspan="6">
-        <n-empty description="暂未添加互联网账号">
+        <n-empty description="No internet accounts added">
           <template #icon>
             <n-icon>
               <CallMissedOutlined/>
@@ -66,7 +66,7 @@ function deleteInternetAccount(internetAccount) {
         </n-flex>
       </td>
       <td>{{ internetAccount.account }}</td>
-      <td>{{ internetAccount.remark || "暂无备注信息" }}</td>
+      <td>{{ internetAccount.remark || "No remarks" }}</td>
       <td>
         <n-time :time="internetAccount.createTime"/>
       </td>
