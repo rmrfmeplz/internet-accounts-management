@@ -1,9 +1,10 @@
 <script setup>
 import {useInternetAccountsStore} from '@/store/internetAccounts.js'
 import {usePlatformIconMapsStore} from '@/store/platformIconMaps.js'
-import {EditNoteFilled, DeleteSweepOutlined, CallMissedOutlined} from '@vicons/material'
+import {CallMissedOutlined, DeleteSweepOutlined, EditNoteFilled} from '@vicons/material'
 import {deleteInternetAccountById} from '@/api/modules/internet-account-api.js'
 import {useDialog} from 'naive-ui'
+import {ref} from "vue";
 
 const dialog = useDialog()
 const internetAccountsStore = useInternetAccountsStore()
@@ -26,6 +27,32 @@ function deleteInternetAccount(internetAccount) {
       await platformIconMapsStore.fetchPlatformIconMaps()
     }
   })
+}
+
+function editInternetAccount(editedInternetAccount) {
+  internetAccount.value.platformName = editedInternetAccount.platformName
+  internetAccount.value.account = editedInternetAccount.account
+  internetAccount.value.remark = editedInternetAccount.remark
+  editInternetAccountDefaultFileList.value[0].url = getPlatformIcon(editedInternetAccount.platformName)
+  showEditInternetAccountModal.value = true
+}
+
+const showEditInternetAccountModal = ref(false)
+const internetAccount = ref({platformName: '', account: '', platformIcon: '', remark: ''})
+
+function onCancelEditInternetAccount() {
+  showEditInternetAccountModal.value = false
+}
+
+const editInternetAccountDefaultFileList = ref([
+  {
+    status: 'pending',
+    url: ''
+  }
+])
+
+function getPlatformIcon(platformName) {
+  return platformIconMapsStore.platformIconMaps[platformName]
 }
 </script>
 
@@ -74,7 +101,7 @@ function deleteInternetAccount(internetAccount) {
         <n-time :time="internetAccount.updateTime"/>
       </td>
       <td>
-        <n-button quaternary circle type="primary">
+        <n-button @click="editInternetAccount(internetAccount)" quaternary circle type="primary">
           <template #icon>
             <n-icon>
               <EditNoteFilled/>
@@ -92,6 +119,33 @@ function deleteInternetAccount(internetAccount) {
     </tr>
     </tbody>
   </n-table>
+  <n-modal
+      v-model:show="showEditInternetAccountModal"
+      :close-on-esc="false"
+      :mask-closable="false"
+      :closable="false"
+      :show-icon="false"
+      preset="dialog"
+  >
+    <n-form>
+      <n-form-item label="Edit Platform Name">
+        <n-input v-model:value="internetAccount.platformName" placeholder=""/>
+      </n-form-item>
+      <n-form-item label="Edit Corresponding Account">
+        <n-input v-model:value="internetAccount.account" placeholder=""/>
+      </n-form-item>
+      <n-form-item label="Edit Remarks">
+        <n-input v-model:value="internetAccount.remark" placeholder=""/>
+      </n-form-item>
+      <n-form-item label="Edit Platform Icon">
+        <n-upload list-type="image-card" :max="1" :default-file-list="editInternetAccountDefaultFileList"/>
+      </n-form-item>
+    </n-form>
+    <n-flex justify="end">
+      <n-button @click="onCancelEditInternetAccount">Cancel</n-button>
+      <n-button type="primary">Confirm</n-button>
+    </n-flex>
+  </n-modal>
 </template>
 
 
