@@ -30,10 +30,12 @@ function deleteInternetAccount(internetAccount) {
 }
 
 function editInternetAccount(editedInternetAccount) {
+  editInternetAccountDefaultFileList.value = []
   internetAccount.value.platformName = editedInternetAccount.platformName
   internetAccount.value.account = editedInternetAccount.account
   internetAccount.value.remark = editedInternetAccount.remark
-  editInternetAccountDefaultFileList.value[0].url = getPlatformIcon(editedInternetAccount.platformName)
+  const platformIcon = getPlatformIcon(editedInternetAccount.platformName)
+  if (platformIcon) editInternetAccountDefaultFileList.value.push({status: 'pending', url: platformIcon})
   showEditInternetAccountModal.value = true
 }
 
@@ -44,12 +46,7 @@ function onCancelEditInternetAccount() {
   showEditInternetAccountModal.value = false
 }
 
-const editInternetAccountDefaultFileList = ref([
-  {
-    status: 'pending',
-    url: ''
-  }
-])
+const editInternetAccountDefaultFileList = ref([])
 
 function getPlatformIcon(platformName) {
   return platformIconMapsStore.platformIconMaps[platformName]
