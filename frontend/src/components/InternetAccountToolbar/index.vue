@@ -7,6 +7,7 @@ import {usePlatformIconMapsStore} from '@/store/platformIconMaps.js'
 import {ALLOWED_IMAGE_SUFFIXS, ALLOWED_IMAGE_SIZE} from '@/constants/platformIconUploadConstants.js'
 import validators from '@/utils/validators.js'
 import {createNotificationConfig} from '@/utils/notification.js'
+import InternetAccountFilter from './components/InternetAccountFilter.vue'
 
 const internetAccountsStore = useInternetAccountsStore()
 const platformIconMapsStore = usePlatformIconMapsStore()
@@ -79,6 +80,7 @@ const uploadedPlatformIconSrc = ref('')
 
 <template>
   <n-button type="primary" @click="addInternetAccount">New Internet Account</n-button>
+  <InternetAccountFilter/>
   <n-modal
       v-model:show="showAddInternetAccountModal"
       :close-on-esc="false"
