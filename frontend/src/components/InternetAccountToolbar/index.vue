@@ -79,8 +79,13 @@ const uploadedPlatformIconSrc = ref('')
 
 
 <template>
-  <n-button type="primary" @click="addInternetAccount">New Internet Account</n-button>
-  <InternetAccountFilter/>
+  <div class="internet-account-actions">
+    <n-button type="primary" @click="addInternetAccount" class="internet-account-add-btn">
+      New Internet Account
+    </n-button>
+    <InternetAccountFilter/>
+  </div>
+  <n-divider/>
   <n-modal
       v-model:show="showAddInternetAccountModal"
       :close-on-esc="false"
@@ -108,4 +113,12 @@ const uploadedPlatformIconSrc = ref('')
 
 
 <style scoped>
+.internet-account-actions {
+  display: flex;
+  width: 100%;
+
+  .internet-account-add-btn {
+    margin-right: 15px;
+  }
+}
 </style>

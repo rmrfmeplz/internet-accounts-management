@@ -11,9 +11,9 @@
     "id": "B48D4E88-51DF-47BF-A64D-E98283684471",
     "platformName": "QQ",
     "account": "2423123123123ATM",
-    "remark": "",
+    "remark": "ccc",
     "createTime": 1769417051104,
-    "updateTime": 1769417116557
+    "updateTime": 1769443371676
   },
   {
     "id": "1F729443-F1F3-4497-8C32-FC524ADA3E1F",
@@ -35,16 +35,16 @@
     "id": "1C843395-1DA7-47D2-8085-1A688F2EF5F1",
     "platformName": "WeChat",
     "account": "--0x22221",
-    "remark": "",
+    "remark": "demo",
     "createTime": 1769417085357,
-    "updateTime": 1769417085357
+    "updateTime": 1769441159108
   },
   {
     "id": "659E685F-7BBC-43D1-9FB2-4D3C6F99FF54",
     "platformName": "ALiPay",
     "account": "19503001025",
-    "remark": "",
+    "remark": "ccc",
     "createTime": 1769417147798,
-    "updateTime": 1769417147798
+    "updateTime": 1769443362148
   }
 ]
