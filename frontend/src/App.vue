@@ -1,6 +1,6 @@
 <script setup>
 import InternetAccountList from '@/components/InternetAccountList.vue'
-import InternetAccountToolbar from '@/components/InternetAccountToolbar.vue'
+import InternetAccountToolbar from '@/components/InternetAccountToolbar/index.vue'
 </script>
 
 <template>
