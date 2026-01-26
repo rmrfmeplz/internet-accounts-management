@@ -12,6 +12,6 @@ export function deleteInternetAccountById(id) {
     return request.delete(`/internet-accounts/${id}`)
 }
 
-export function reqEditInternetAccount(internetAccount) {
+export function updateInternetAccountByOd(internetAccount) {
     return request.put('/internet-accounts', internetAccount)
 }

@@ -1,20 +1,13 @@
 const internetAccountService = require('../services/InternetAccountService')
-const {
-    validatePlatformName,
-    validateAccount,
-    validatePlatformIcon,
-    validateRemark,
-    validateInternetAccountId,
-    validatePlatformIconBase64
-} = require('../common/utils/validators')
+const validators = require('../common/utils/validators')
 
 function createInternetAccount(req, resp) {
     const {platformName = '', account = '', platformIcon = '', remark = ''} = req.body || {}
-    if (!validatePlatformName(platformName) || !validateAccount(account) || !validatePlatformIcon(platformIcon) || !validateRemark(remark)) {
+    if (!validators.platformName(platformName) || !validators.account(account) || !validators.platformIcon(platformIcon) || !validators.remark(remark)) {
         return resp.fail('Parameter error. Please check if the entered parameters are valid and complete.')
     }
     if (platformIcon) {
-        const res = validatePlatformIconBase64(platformIcon)
+        const res = validators.platformIconBase64(platformIcon)
         if (!res.success) return resp.fail(res.errMsg)
     }
     try {
@@ -40,11 +33,11 @@ function deleteInternetAccountById(req, resp) {
 
 function updateInternetAccountById(req, resp) {
     const {id = '', platformName = '', account = '', platformIcon = '', remark = ''} = req.body || {}
-    if (!validateInternetAccountId(id) || !validatePlatformName(platformName) || !validateAccount(account) || !validatePlatformIcon(platformIcon) || !validateRemark(remark)) {
+    if (!validators.internetAccountId(id) || !validators.platformName(platformName) || !validators.account(account) || !validators.platformIcon(platformIcon) || !validators.remark(remark)) {
         return resp.fail('Parameter error. Please check if the entered parameters are valid and complete.')
     }
     if (platformIcon) {
-        const res = validatePlatformIconBase64(platformIcon)
+        const res = validators.platformIconBase64(platformIcon)
         if (!res.success) return resp.fail(res.errMsg)
     }
     try {

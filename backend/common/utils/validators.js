@@ -1,8 +1,4 @@
-const {
-    ALLOWED_IMAGE_SIZE,
-    ALLOWED_IMAGE_BASE64_SIZE,
-    ALLOWED_IMAGE_SUFFIXS
-} = require('../../constants/platformIconUploadConstants')
+const platformIconUploadConstants = require('../../constants/platformIconUploadConstants')
 
 function validatePlatformName(platformName) {
     return typeof platformName === 'string' && platformName.trim()
@@ -21,11 +17,11 @@ function validatePlatformIconType(data) {
 }
 
 function validatePlatformIconSize(size) {
-    return size <= ALLOWED_IMAGE_SIZE
+    return size <= platformIconUploadConstants.ALLOWED_IMAGE_SIZE
 }
 
 function validatePlatformIconBase64Size(size) {
-    return size <= ALLOWED_IMAGE_BASE64_SIZE
+    return size <= platformIconUploadConstants.ALLOWED_IMAGE_BASE64_SIZE
 }
 
 function validateRemark(remark) {
@@ -46,35 +42,35 @@ function validateInternetAccountId(id) {
 }
 
 function validatePlatformIconBase64(platformIcon) {
-    const regexStr = `^data:image\\/(${ALLOWED_IMAGE_SUFFIXS.join('|')});base64,(.+)$`
+    const regexStr = `^data:image\\/(${platformIconUploadConstants.ALLOWED_IMAGE_SUFFIXS.join('|')});base64,(.+)$`
     const matchResult = platformIcon.match(new RegExp(regexStr))
     if (!matchResult) return {
         success: false,
-        errMsg: `Only supports uploading images in ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()} formats.`
+        errMsg: `Only supports uploading images in ${platformIconUploadConstants.ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()} formats.`
     }
     const base64Data = matchResult[2]
     if (!validateBase64(base64Data)) return {success: false, errMsg: 'Please upload a valid image file'}
     if (!validatePlatformIconBase64Size(base64Data.length)) return {
         success: false,
-        errMsg: `Only Base64 encoded images with ${ALLOWED_IMAGE_BASE64_SIZE} characters or fewer are supported. The current encoding length has exceeded the limit.`
+        errMsg: `Only Base64 encoded images with ${platformIconUploadConstants.ALLOWED_IMAGE_BASE64_SIZE} characters or fewer are supported. The current encoding length has exceeded the limit.`
     }
     const data = Buffer.from(base64Data, 'base64')
     if (!validatePlatformIconType(data)) return {
         success: false,
-        errMsg: `Only supports uploading images in ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()} formats.`
+        errMsg: `Only supports uploading images in ${platformIconUploadConstants.ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()} formats.`
     }
     if (!validatePlatformIconSize(data.length)) return {
         success: false,
-        errMsg: `Only supports uploading images of ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB or smaller.`
+        errMsg: `Only supports uploading images of ${platformIconUploadConstants.ALLOWED_IMAGE_SIZE / 1024 / 1024} MB or smaller.`
     }
     return {success: true, errMsg: ''}
 }
 
 module.exports = {
-    validatePlatformName,
-    validateAccount,
-    validateRemark,
-    validatePlatformIcon,
-    validateInternetAccountId,
-    validatePlatformIconBase64
+    platformName: validatePlatformName,
+    account: validateAccount,
+    remark: validateRemark,
+    platformIcon: validatePlatformIcon,
+    internetAccountId: validateInternetAccountId,
+    platformIconBase64: validatePlatformIconBase64
 }

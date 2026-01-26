@@ -2,17 +2,13 @@
 import {useInternetAccountsStore} from '@/store/internetAccounts.js'
 import {usePlatformIconMapsStore} from '@/store/platformIconMaps.js'
 import {CallMissedOutlined, DeleteSweepOutlined, EditNoteFilled} from '@vicons/material'
-import {reqEditInternetAccount, deleteInternetAccountById} from '@/api/modules/internet-account-api.js'
+import {updateInternetAccountByOd, deleteInternetAccountById} from '@/api/modules/internet-account-api.js'
 import {useDialog} from 'naive-ui'
-import {ref} from "vue"
-import {
-  validateAccount,
-  validatePlatformName,
-  validatePlatformIconSize,
-  validatePlatformIconType
-} from "@/utils/validators.js"
+import {ref} from 'vue'
 import {useNotification} from 'naive-ui'
 import {ALLOWED_IMAGE_SIZE, ALLOWED_IMAGE_SUFFIXS} from '@/constants/platformIconUploadConstants.js'
+import validators from '@/utils/validators.js'
+import {createNotificationConfig} from '@/utils/notification.js'
 
 const notification = useNotification()
 const dialog = useDialog()
@@ -62,37 +58,33 @@ function getPlatformIcon(platformName) {
   return platformIconMapsStore.platformIconMaps[platformName]
 }
 
-function retMsgObj(title, content) {
-  return {title, content, duration: 10000, keepAliveOnHover: true}
-}
-
 async function onConfirmEditInternetAccount() {
-  if (!validatePlatformName(internetAccount.value.platformName)) {
-    notification.error(retMsgObj('Error!', 'Please enter the platform name'))
+  if (!validators.platformName(internetAccount.value.platformName)) {
+    notification.error(createNotificationConfig('Error!', 'Please enter the platform name'))
     return
   }
-  if (!validateAccount(internetAccount.value.account)) {
-    notification.error(retMsgObj('Error!', 'Please enter the corresponding account'))
+  if (!validators.account(internetAccount.value.account)) {
+    notification.error(createNotificationConfig('Error!', 'Please enter the corresponding account'))
     return
   }
-  const {code, message} = await reqEditInternetAccount(internetAccount.value)
+  const {code, message} = await updateInternetAccountByOd(internetAccount.value)
   if (code) {
     await internetAccountsStore.fetchInternetAccounts()
     await platformIconMapsStore.fetchPlatformIconMaps()
-    notification.success(retMsgObj('Success!', 'Successfully updated'))
+    notification.success(createNotificationConfig('Success!', 'Successfully updated'))
   } else {
-    notification.error(retMsgObj('Error!', message))
+    notification.error(createNotificationConfig('Error!', message))
   }
   showEditInternetAccountModal.value = false
 }
 
 function validatePlatformIconBeforeUpload(file) {
-  if (!validatePlatformIconType(file.file.type)) {
-    notification.error(retMsgObj('Error!', `Only supports uploading images in the formats of ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()}`))
+  if (!validators.platformIconType(file.file.type)) {
+    notification.error(createNotificationConfig('Error!', `Only supports uploading images in the formats of ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()}`))
     return false
   }
-  if (!validatePlatformIconSize(file.file.file.size)) {
-    notification.error(retMsgObj('Error!', `Only supports uploading images of ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB or smaller`))
+  if (!validators.platformIconSize(file.file.file.size)) {
+    notification.error(createNotificationConfig('Error!', `Only supports uploading images of ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB or smaller`))
     return false
   }
   const reader = new FileReader()

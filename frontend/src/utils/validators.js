@@ -1,17 +1,24 @@
 import {ALLOWED_IMAGE_TYPES, ALLOWED_IMAGE_SIZE} from '@/constants/platformIconUploadConstants.js'
 
-export function validatePlatformName(platformName) {
+function validatePlatformName(platformName) {
     return typeof platformName === 'string' && platformName.trim()
 }
 
-export function validateAccount(account) {
+function validateAccount(account) {
     return typeof account === 'string' && account.trim()
 }
 
-export function validatePlatformIconType(type) {
+function validatePlatformIconType(type) {
     return ALLOWED_IMAGE_TYPES.includes(type)
 }
 
-export function validatePlatformIconSize(size) {
+function validatePlatformIconSize(size) {
     return size <= ALLOWED_IMAGE_SIZE
+}
+
+export default {
+    platformName: validatePlatformName,
+    account: validateAccount,
+    platformIconSize: validatePlatformIconSize,
+    platformIconType: validatePlatformIconType
 }

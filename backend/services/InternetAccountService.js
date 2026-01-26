@@ -17,25 +17,30 @@ function listInternetAccounts() {
     return internetAccountDao.listAllInternetAccounts()
 }
 
-function deleteInternetAccountById(id) {
+function validateInternetAccountExists(id) {
     const internetAccount = internetAccountDao.findInternetAccountById(id)
     if (!internetAccount) throw new Error(`Query failed: the record corresponding to ID ${id} does not exist.`)
-    internetAccountDao.deleteInternetAccountById(id)
+    return internetAccount
+}
+
+function cleanPlatformIconMapIfNoAccounts(platformName) {
     // 判断平台下是否还有其他账号
-    const internetAccounts = internetAccountDao.findInternetAccountsByPlatformName(internetAccount.platformName)
+    const internetAccounts = internetAccountDao.findInternetAccountsByPlatformName(platformName)
     // 若平台下无其他账号，清理关联的平台图标映射（避免冗余数据堆积）
-    if (internetAccounts.length === 0) platformIconMapDao.deletePlatformIconMapByPlatformName(internetAccount.platformName)
+    if (internetAccounts.length === 0) platformIconMapDao.deletePlatformIconMapByPlatformName(platformName)
+}
+
+function deleteInternetAccountById(id) {
+    const internetAccount = validateInternetAccountExists(id)
+    internetAccountDao.deleteInternetAccountById(id)
+    cleanPlatformIconMapIfNoAccounts(internetAccount.platformName)
 }
 
 function updateInternetAccountById(id, platformName, account, platformIcon, remark) {
-    const internetAccount = internetAccountDao.findInternetAccountById(id)
-    if (!internetAccount) throw new Error(`Query failed: the record corresponding to ID ${id} does not exist.`)
+    const internetAccount = validateInternetAccountExists(id)
     internetAccountDao.updateInternetAccountById(id, platformName, account, remark)
     if (platformIcon) platformIconMapDao.updatePlatformIconMapByPlatformName(platformName, platformIcon)
-    // 判断平台下是否还有其他账号
-    const internetAccounts = internetAccountDao.findInternetAccountsByPlatformName(internetAccount.platformName)
-    // 若平台下无其他账号，清理关联的平台图标映射（避免冗余数据堆积）
-    if (internetAccounts.length === 0) platformIconMapDao.deletePlatformIconMapByPlatformName(internetAccount.platformName)
+    cleanPlatformIconMapIfNoAccounts(internetAccount.platformName)
 }
 
 module.exports = {
