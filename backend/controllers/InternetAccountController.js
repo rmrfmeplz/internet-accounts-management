@@ -16,7 +16,7 @@ const {
 } = require('../common/utils/validators')
 
 function createInternetAccount(req, resp) {
-    const {platformName, account, platformIcon, remark} = req.body
+    const {platformName = '', account = '', platformIcon = '', remark = ''} = req.body || {}
     if (!validatePlatformName(platformName) || !validateAccount(account) || !validatePlatformIcon(platformIcon) || !validateRemark(remark)) {
         return resp.fail('Parameter error. Please check if the entered parameters are valid and complete.')
     }
