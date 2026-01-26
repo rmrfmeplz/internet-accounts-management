@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "id": "17D6F9A7-DED4-4EA8-87FC-A233CF7AC6F3",
+    "platformName": "QQ",
+    "account": "4545454545LL",
+    "remark": "",
+    "createTime": 1769417044729,
+    "updateTime": 1769417097014
+  },
+  {
+    "id": "B48D4E88-51DF-47BF-A64D-E98283684471",
+    "platformName": "QQ",
+    "account": "2423123123123ATM",
+    "remark": "",
+    "createTime": 1769417051104,
+    "updateTime": 1769417116557
+  },
+  {
+    "id": "1F729443-F1F3-4497-8C32-FC524ADA3E1F",
+    "platformName": "QQ",
+    "account": "645646453QQQ",
+    "remark": "",
+    "createTime": 1769417057124,
+    "updateTime": 1769417108331
+  },
+  {
+    "id": "A773F0DF-3C0B-49C7-BDA9-90D208D0999D",
+    "platformName": "WeChat",
+    "account": "--0x1122",
+    "remark": "",
+    "createTime": 1769417072217,
+    "updateTime": 1769417128375
+  },
+  {
+    "id": "1C843395-1DA7-47D2-8085-1A688F2EF5F1",
+    "platformName": "WeChat",
+    "account": "--0x22221",
+    "remark": "",
+    "createTime": 1769417085357,
+    "updateTime": 1769417085357
+  },
+  {
+    "id": "659E685F-7BBC-43D1-9FB2-4D3C6F99FF54",
+    "platformName": "ALiPay",
+    "account": "19503001025",
+    "remark": "",
+    "createTime": 1769417147798,
+    "updateTime": 1769417147798
+  }
+]
