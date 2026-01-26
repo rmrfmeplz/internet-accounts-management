@@ -27,8 +27,20 @@ function deleteInternetAccountById(id) {
     if (internetAccounts.length === 0) platformIconMapDao.deletePlatformIconMapByPlatformName(internetAccount.platformName)
 }
 
+function updateInternetAccountById(id, platformName, account, platformIcon, remark) {
+    const internetAccount = internetAccountDao.findInternetAccountById(id)
+    if (!internetAccount) throw new Error(`Query failed: the record corresponding to ID ${id} does not exist.`)
+    internetAccountDao.updateInternetAccountById(id, platformName, account, remark)
+    if (platformIcon) platformIconMapDao.updatePlatformIconMapByPlatformName(platformName, platformIcon)
+    // 判断平台下是否还有其他账号
+    const internetAccounts = internetAccountDao.findInternetAccountsByPlatformName(internetAccount.platformName)
+    // 若平台下无其他账号，清理关联的平台图标映射（避免冗余数据堆积）
+    if (internetAccounts.length === 0) platformIconMapDao.deletePlatformIconMapByPlatformName(internetAccount.platformName)
+}
+
 module.exports = {
     createInternetAccount,
     listInternetAccounts,
-    deleteInternetAccountById
+    deleteInternetAccountById,
+    updateInternetAccountById
 }

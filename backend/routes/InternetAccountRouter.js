@@ -1,8 +1,9 @@
 const internetAccountRouter = require('express').Router()
-const InternetAccountController = require('../controllers/InternetAccountController')
+const internetAccountController = require('../controllers/InternetAccountController')
 
-internetAccountRouter.post('/', InternetAccountController.createInternetAccount)
-internetAccountRouter.get('/', InternetAccountController.listInternetAccounts)
-internetAccountRouter.delete('/:id', InternetAccountController.deleteInternetAccountById)
+internetAccountRouter.post('/', internetAccountController.createInternetAccount)
+internetAccountRouter.get('/', internetAccountController.listInternetAccounts)
+internetAccountRouter.delete('/:id', internetAccountController.deleteInternetAccountById)
+internetAccountRouter.put('/', internetAccountController.updateInternetAccountById)
 
 module.exports = internetAccountRouter

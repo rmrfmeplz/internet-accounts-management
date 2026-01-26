@@ -40,6 +40,7 @@ function deleteInternetAccount(internetAccount) {
 
 function editInternetAccount(editedInternetAccount) {
   editInternetAccountDefaultFileList.value = []
+  internetAccount.value.id = editedInternetAccount.id
   internetAccount.value.platformName = editedInternetAccount.platformName
   internetAccount.value.account = editedInternetAccount.account
   internetAccount.value.remark = editedInternetAccount.remark
@@ -49,7 +50,7 @@ function editInternetAccount(editedInternetAccount) {
 }
 
 const showEditInternetAccountModal = ref(false)
-const internetAccount = ref({platformName: '', account: '', platformIcon: '', remark: ''})
+const internetAccount = ref({id: '', platformName: '', account: '', platformIcon: '', remark: ''})
 
 function onCancelEditInternetAccount() {
   showEditInternetAccountModal.value = false
@@ -78,7 +79,7 @@ async function onConfirmEditInternetAccount() {
   if (code) {
     await internetAccountsStore.fetchInternetAccounts()
     await platformIconMapsStore.fetchPlatformIconMaps()
-    notification.success(retMsgObj('Success!', `The account ${internetAccount.value.account} for platform ${internetAccount.value.platformName} has been updated`))
+    notification.success(retMsgObj('Success!', 'Successfully updated'))
   } else {
     notification.error(retMsgObj('Error!', message))
   }

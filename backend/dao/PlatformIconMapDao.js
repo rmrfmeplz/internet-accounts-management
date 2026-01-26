@@ -18,8 +18,15 @@ function deletePlatformIconMapByPlatformName(platformName) {
     fs.writeFileSync(path.join(__dirname, '../data/platformIconMaps.json'), JSON.stringify(platformIconMaps, null, 2), 'utf8')
 }
 
+function updatePlatformIconMapByPlatformName(platformName, platformIcon) {
+    const platformIconMaps = listAllPlatformIconMaps()
+    platformIconMaps[platformName] = platformIcon
+    fs.writeFileSync(path.join(__dirname, '../data/platformIconMaps.json'), JSON.stringify(platformIconMaps, null, 2), 'utf8')
+}
+
 module.exports = {
     savePlatformIconMap,
     listAllPlatformIconMaps,
-    deletePlatformIconMapByPlatformName
+    deletePlatformIconMapByPlatformName,
+    updatePlatformIconMapByPlatformName
 }

@@ -1,4 +1,8 @@
-const {ALLOWED_IMAGE_SIZE, ALLOWED_IMAGE_BASE64_SIZE} = require('../../constants/platformIconUploadConstants')
+const {
+    ALLOWED_IMAGE_SIZE,
+    ALLOWED_IMAGE_BASE64_SIZE,
+    ALLOWED_IMAGE_SUFFIXS
+} = require('../../constants/platformIconUploadConstants')
 
 function validatePlatformName(platformName) {
     return typeof platformName === 'string' && platformName.trim()
@@ -33,16 +37,44 @@ function validatePlatformIcon(platformIcon) {
 }
 
 function validateBase64(base64) {
-    return /^[A-Za-z0-9+/=]+$/.test(base64)
+    return typeof base64 === 'string' && /^[A-Za-z0-9+/=]+$/.test(base64)
+}
+
+function validateInternetAccountId(id) {
+    const uuidV4HyphenatedRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    return typeof id === 'string' && uuidV4HyphenatedRegex.test(id)
+}
+
+function validatePlatformIconBase64(platformIcon) {
+    const regexStr = `^data:image\\/(${ALLOWED_IMAGE_SUFFIXS.join('|')});base64,(.+)$`
+    const matchResult = platformIcon.match(new RegExp(regexStr))
+    if (!matchResult) return {
+        success: false,
+        errMsg: `Only supports uploading images in ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()} formats.`
+    }
+    const base64Data = matchResult[2]
+    if (!validateBase64(base64Data)) return {success: false, errMsg: 'Please upload a valid image file'}
+    if (!validatePlatformIconBase64Size(base64Data.length)) return {
+        success: false,
+        errMsg: `Only Base64 encoded images with ${ALLOWED_IMAGE_BASE64_SIZE} characters or fewer are supported. The current encoding length has exceeded the limit.`
+    }
+    const data = Buffer.from(base64Data, 'base64')
+    if (!validatePlatformIconType(data)) return {
+        success: false,
+        errMsg: `Only supports uploading images in ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()} formats.`
+    }
+    if (!validatePlatformIconSize(data.length)) return {
+        success: false,
+        errMsg: `Only supports uploading images of ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB or smaller.`
+    }
+    return {success: true, errMsg: ''}
 }
 
 module.exports = {
     validatePlatformName,
     validateAccount,
-    validatePlatformIconType,
-    validatePlatformIconSize,
     validateRemark,
     validatePlatformIcon,
-    validatePlatformIconBase64Size,
-    validateBase64
+    validateInternetAccountId,
+    validatePlatformIconBase64
 }

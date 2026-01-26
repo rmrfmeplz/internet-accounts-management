@@ -28,10 +28,23 @@ function findInternetAccountsByPlatformName(platformName) {
     return internetAccounts.filter(internetAccount => internetAccount.platformName === platformName)
 }
 
+function updateInternetAccountById(id, platformName, account, remark) {
+    const internetAccounts = listAllInternetAccounts()
+    const internetAccount = internetAccounts.find(internetAccount => internetAccount.id === id)
+    if (internetAccount) {
+        internetAccount.platformName = platformName
+        internetAccount.account = account
+        internetAccount.remark = remark
+        internetAccount.updateTime = Date.now()
+        fs.writeFileSync(path.join(__dirname, '../data/internetAccounts.json'), JSON.stringify(internetAccounts, null, 2), 'utf8')
+    }
+}
+
 module.exports = {
     saveInternetAccount,
     listAllInternetAccounts,
     deleteInternetAccountById,
     findInternetAccountById,
-    findInternetAccountsByPlatformName
+    findInternetAccountsByPlatformName,
+    updateInternetAccountById
 }
