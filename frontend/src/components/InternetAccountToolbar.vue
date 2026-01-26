@@ -4,6 +4,13 @@ import {useNotification} from 'naive-ui'
 import {createInternetAccount} from '@/api/modules/internet-account-api.js'
 import {useInternetAccountsStore} from '@/store/internetAccounts.js'
 import {usePlatformIconMapsStore} from '@/store/platformIconMaps.js'
+import {ALLOWED_IMAGE_SUFFIXS, ALLOWED_IMAGE_SIZE} from '@/constants/platformIconUploadConstants.js'
+import {
+  validatePlatformName,
+  validateAccount,
+  validatePlatformIconType,
+  validatePlatformIconSize
+} from '@/utils/validators.js'
 
 const internetAccountsStore = useInternetAccountsStore()
 const platformIconMapsStore = usePlatformIconMapsStore()
@@ -20,23 +27,19 @@ function onCancelAddInternetAccount() {
 }
 
 async function onConfirmAddInternetAccount() {
-  const platformName = String(internetAccount.value.platformName).trim()
-  if (!platformName) {
+  if (!validatePlatformName(internetAccount.value.platformName)) {
     notification.error(retMsgObj('Error!', 'Please enter the platform name'))
     return
   }
-  const account = String(internetAccount.value.account).trim()
-  if (!account) {
+  if (!validateAccount(internetAccount.value.account)) {
     notification.error(retMsgObj('Error!', 'Please enter the corresponding account'))
     return
   }
-  const platformIcon = internetAccount.value.platformIcon
-  const remark = internetAccount.value.remark
-  const {code, message} = await createInternetAccount({platformName, account, platformIcon, remark})
+  const {code, message} = await createInternetAccount(internetAccount.value)
   if (code) {
     await internetAccountsStore.fetchInternetAccounts()
     await platformIconMapsStore.fetchPlatformIconMaps()
-    notification.success(retMsgObj('Success!', `The account ${account} for platform ${platformName} has been saved`))
+    notification.success(retMsgObj('Success!', `The account ${internetAccount.value.account} for platform ${internetAccount.value.platformName} has been saved`))
   } else {
     notification.error(retMsgObj('Error!', message))
   }
@@ -52,16 +55,12 @@ function addInternetAccount() {
   showAddInternetAccountModal.value = true
 }
 
-const ALLOWED_IMAGE_TYPES = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/webp']
-const ALLOWED_IMAGE_SUFFIXS = ['jpg', 'jpeg', 'png', 'gif', 'webp']
-const ALLOWED_IMAGE_SIZE = 2 * 1024 * 1024
-
 function validatePlatformIconBeforeUpload(file) {
-  if (!ALLOWED_IMAGE_TYPES.includes(file.file.type)) {
+  if (!validatePlatformIconType(file.file.type)) {
     notification.error(retMsgObj('Error!', `Only supports uploading images in the formats of ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()}`))
     return false
   }
-  if (file.file.file.size > ALLOWED_IMAGE_SIZE) {
+  if (!validatePlatformIconSize(file.file.file.size)) {
     notification.error(retMsgObj('Error!', `Only supports uploading images of ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB or smaller`))
     return false
   }
