@@ -21,12 +21,15 @@ function filterInternetAccounts() {
   <div class="internet-account-filter-conditions">
     <div class="internet-account-filter-text-group">
       <n-input placeholder="Filter by Platform"
+               clearable
                v-model:value="internetAccount.platformName"
                @input="filterInternetAccounts"/>
       <n-input placeholder="Filter by Account"
+               clearable
                v-model:value="internetAccount.account"
                @input="filterInternetAccounts"/>
       <n-input placeholder="Filter by Remarks"
+               clearable
                v-model:value="internetAccount.remark"
                @input="filterInternetAccounts"/>
     </div>
