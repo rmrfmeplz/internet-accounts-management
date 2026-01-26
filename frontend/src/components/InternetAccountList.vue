@@ -2,10 +2,19 @@
 import {useInternetAccountsStore} from '@/store/internetAccounts.js'
 import {usePlatformIconMapsStore} from '@/store/platformIconMaps.js'
 import {CallMissedOutlined, DeleteSweepOutlined, EditNoteFilled} from '@vicons/material'
-import {deleteInternetAccountById} from '@/api/modules/internet-account-api.js'
+import {reqEditInternetAccount, deleteInternetAccountById} from '@/api/modules/internet-account-api.js'
 import {useDialog} from 'naive-ui'
-import {ref} from "vue";
+import {ref} from "vue"
+import {
+  validateAccount,
+  validatePlatformName,
+  validatePlatformIconSize,
+  validatePlatformIconType
+} from "@/utils/validators.js"
+import {useNotification} from 'naive-ui'
+import {ALLOWED_IMAGE_SIZE, ALLOWED_IMAGE_SUFFIXS} from '@/constants/platformIconUploadConstants.js'
 
+const notification = useNotification()
 const dialog = useDialog()
 const internetAccountsStore = useInternetAccountsStore()
 const platformIconMapsStore = usePlatformIconMapsStore()
@@ -50,6 +59,44 @@ const editInternetAccountDefaultFileList = ref([])
 
 function getPlatformIcon(platformName) {
   return platformIconMapsStore.platformIconMaps[platformName]
+}
+
+function retMsgObj(title, content) {
+  return {title, content, duration: 10000, keepAliveOnHover: true}
+}
+
+async function onConfirmEditInternetAccount() {
+  if (!validatePlatformName(internetAccount.value.platformName)) {
+    notification.error(retMsgObj('Error!', 'Please enter the platform name'))
+    return
+  }
+  if (!validateAccount(internetAccount.value.account)) {
+    notification.error(retMsgObj('Error!', 'Please enter the corresponding account'))
+    return
+  }
+  const {code, message} = await reqEditInternetAccount(internetAccount.value)
+  if (code) {
+    await internetAccountsStore.fetchInternetAccounts()
+    await platformIconMapsStore.fetchPlatformIconMaps()
+    notification.success(retMsgObj('Success!', `The account ${internetAccount.value.account} for platform ${internetAccount.value.platformName} has been updated`))
+  } else {
+    notification.error(retMsgObj('Error!', message))
+  }
+  showEditInternetAccountModal.value = false
+}
+
+function validatePlatformIconBeforeUpload(file) {
+  if (!validatePlatformIconType(file.file.type)) {
+    notification.error(retMsgObj('Error!', `Only supports uploading images in the formats of ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()}`))
+    return false
+  }
+  if (!validatePlatformIconSize(file.file.file.size)) {
+    notification.error(retMsgObj('Error!', `Only supports uploading images of ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB or smaller`))
+    return false
+  }
+  const reader = new FileReader()
+  reader.onload = e => internetAccount.value.platformIcon = e.target.result
+  reader.readAsDataURL(file.file.file)
 }
 </script>
 
@@ -135,12 +182,13 @@ function getPlatformIcon(platformName) {
         <n-input v-model:value="internetAccount.remark" placeholder=""/>
       </n-form-item>
       <n-form-item label="Edit Platform Icon">
-        <n-upload list-type="image-card" :max="1" :default-file-list="editInternetAccountDefaultFileList"/>
+        <n-upload list-type="image-card" :max="1" :default-file-list="editInternetAccountDefaultFileList"
+                  :on-before-upload="validatePlatformIconBeforeUpload"/>
       </n-form-item>
     </n-form>
     <n-flex justify="end">
       <n-button @click="onCancelEditInternetAccount">Cancel</n-button>
-      <n-button type="primary">Confirm</n-button>
+      <n-button @click="onConfirmEditInternetAccount" type="primary">Confirm</n-button>
     </n-flex>
   </n-modal>
 </template>
