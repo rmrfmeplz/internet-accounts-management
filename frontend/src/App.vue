@@ -1,23 +1,15 @@
 <script setup>
-import InternetAccountList from '@/components/InternetAccountList.vue'
-import InternetAccountToolbar from '@/components/InternetAccountToolbar/index.vue'
 </script>
+
 
 <template>
   <n-dialog-provider>
     <n-notification-provider>
-      <main>
-        <n-flex>
-          <InternetAccountToolbar/>
-          <InternetAccountList/>
-        </n-flex>
-      </main>
+      <router-view/>
     </n-notification-provider>
   </n-dialog-provider>
 </template>
 
+
 <style scoped>
-main {
-  padding: 10vh 10vw;
-}
 </style>
