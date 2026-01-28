@@ -1,6 +1,6 @@
 <script setup>
-import {useInternetAccountsStore} from '@/store/internetAccounts.js'
-import {usePlatformIconMapsStore} from '@/store/platformIconMaps.js'
+import {useInternetAccountsStore} from '@/stores/internetAccounts.js'
+import {usePlatformIconMapsStore} from '@/stores/platformIconMaps.js'
 import {CallMissedOutlined, DeleteSweepOutlined, EditNoteFilled} from '@vicons/material'
 import {updateInternetAccountByOd, deleteInternetAccountById} from '@/api/modules/internet-account-api.js'
 import {useDialog} from 'naive-ui'
@@ -27,9 +27,12 @@ function deleteInternetAccount(internetAccount) {
     closeOnEsc: false,
     maskClosable: false,
     onPositiveClick: async () => {
-      await deleteInternetAccountById(internetAccount.id)
-      await internetAccountsStore.fetchInternetAccounts()
-      await platformIconMapsStore.fetchPlatformIconMaps()
+      try {
+        await deleteInternetAccountById(internetAccount.id)
+        await internetAccountsStore.fetchInternetAccounts()
+        await platformIconMapsStore.fetchPlatformIconMaps()
+      } catch (err) {
+      }
     }
   })
 }

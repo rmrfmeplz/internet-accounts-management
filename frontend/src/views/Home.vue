@@ -16,6 +16,6 @@ import InternetAccountToolbar from '@/components/InternetAccountToolbar/index.vu
 
 <style scoped>
 main {
-  padding: 10vh 10vw;
+  padding: 2vh 10vw 10vh;
 }
 </style>

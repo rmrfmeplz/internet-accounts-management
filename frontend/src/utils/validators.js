@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 import {ALLOWED_IMAGE_TYPES, ALLOWED_IMAGE_SIZE} from '@/constants/platformIconUploadConstants.js'
 
 function validatePlatformName(platformName) {
@@ -45,10 +47,27 @@ function validatePassword(password) {
     return {success: true, errMsg: ''}
 }
 
+function validateUsername(username) {
+    if (typeof username !== 'string' || !username.trim()) return {
+        success: false,
+        errMsg: 'Username cannot be empty or contain only whitespace'
+    }
+    if (username.length < 5 || username.length > 15) return {
+        success: false,
+        errMsg: 'Username length must be between 5 and 15 characters'
+    }
+    if (!/^[A-Za-z0-9_]{5,16}$/.test(username)) return {
+        success: false,
+        errMsg: 'Username can only contain uppercase/lowercase letters, numbers (0-9), and underscore (_)'
+    }
+    return {success: true, errMsg: ''}
+}
+
 export default {
     platformName: validatePlatformName,
     account: validateAccount,
     platformIconSize: validatePlatformIconSize,
     platformIconType: validatePlatformIconType,
-    password: validatePassword
+    password: validatePassword,
+    username: validateUsername
 }

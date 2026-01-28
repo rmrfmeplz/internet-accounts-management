@@ -2,12 +2,13 @@
 import {ref} from 'vue'
 import {useNotification} from 'naive-ui'
 import {createInternetAccount} from '@/api/modules/internet-account-api.js'
-import {useInternetAccountsStore} from '@/store/internetAccounts.js'
-import {usePlatformIconMapsStore} from '@/store/platformIconMaps.js'
+import {useInternetAccountsStore} from '@/stores/internetAccounts.js'
+import {usePlatformIconMapsStore} from '@/stores/platformIconMaps.js'
 import {ALLOWED_IMAGE_SUFFIXS, ALLOWED_IMAGE_SIZE} from '@/constants/platformIconUploadConstants.js'
 import validators from '@/utils/validators.js'
 import {createNotificationConfig} from '@/utils/notification.js'
 import InternetAccountFilter from './components/InternetAccountFilter.vue'
+import AppHeader from './components/AppHeader.vue'
 
 const internetAccountsStore = useInternetAccountsStore()
 const platformIconMapsStore = usePlatformIconMapsStore()
@@ -79,6 +80,7 @@ const uploadedPlatformIconSrc = ref('')
 
 
 <template>
+  <AppHeader/>
   <div class="internet-account-actions">
     <n-button type="primary" @click="addInternetAccount" class="internet-account-add-btn">
       New Internet Account

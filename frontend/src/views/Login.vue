@@ -1,10 +1,14 @@
 <script setup>
 import {ref, onMounted} from 'vue'
-import {getIsInitialPasswordSet, reqInitialPassword} from '@/api/modules/auth.js'
+import {getIsInitialPasswordSet, reqInitialPassword, reqLogin} from '@/api/modules/auth.js'
 import validators from '@/utils/validators.js'
 import {useNotification} from 'naive-ui'
 import {createNotificationConfig} from '@/utils/notification.js'
+import {useUserStore} from '@/stores/user.js'
+import {useRouter} from 'vue-router'
 
+const router = useRouter()
+const userStore = useUserStore()
 const notification = useNotification()
 const isInitialPasswordSet = ref(false)
 
@@ -36,6 +40,32 @@ async function handleInitialPassword() {
     notification.error(createNotificationConfig('Error!', message))
   }
 }
+
+async function login() {
+  const uRes = validators.username(username.value)
+  if (!uRes.success) {
+    notification.error(createNotificationConfig('Error!', uRes.errMsg))
+    return
+  }
+  const pRes = validators.password(password.value)
+  if (!pRes.success) {
+    notification.error(createNotificationConfig('Error!', pRes.errMsg))
+    return
+  }
+  const {code, data, message} = await reqLogin({username: username.value, password: password.value})
+  if (code) {
+    const {token, userInfo} = data
+    localStorage.setItem('USER_TOKEN', token)
+    localStorage.setItem('USER_INFO', JSON.stringify(userInfo))
+    userStore.setLoginInfo(token, userInfo)
+    await router.push('/home')
+    notification.success(createNotificationConfig('Success!', 'Login Successful!'))
+  } else {
+    notification.error(createNotificationConfig('Error!', message))
+  }
+  username.value = ''
+  password.value = ''
+}
 </script>
 
 
@@ -52,7 +82,7 @@ async function handleInitialPassword() {
                  :input-props="{autocomplete: 'off'}"/>
       </n-form-item>
       <n-form-item>
-        <n-button type="primary">Login</n-button>
+        <n-button @click="login" type="primary">Login</n-button>
       </n-form-item>
     </n-form>
   </n-card>

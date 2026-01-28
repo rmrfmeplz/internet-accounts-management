@@ -25,6 +25,7 @@ function updateIsInitialPasswordSet(isInitialPasswordSet) {
 }
 
 module.exports = {
+    findAuth,
     findIsInitialPasswordSet,
     updatePassword,
     updateIsInitialPasswordSet

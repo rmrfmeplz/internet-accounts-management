@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from 'vue'
-import {useInternetAccountsStore} from '@/store/internetAccounts.js'
+import {useInternetAccountsStore} from '@/stores/internetAccounts.js'
 
 const internetAccountsStore = useInternetAccountsStore()
 const internetAccount = ref({

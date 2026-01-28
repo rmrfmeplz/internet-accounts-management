@@ -7,3 +7,7 @@ export function getIsInitialPasswordSet() {
 export function reqInitialPassword(initialPassword) {
     return request.post('/auth/initial-password', {initialPassword})
 }
+
+export function reqLogin(loginParams) {
+    return request.post('/auth/login', loginParams)
+}
