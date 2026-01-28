@@ -1,6 +1,6 @@
 <script setup>
 import {ref, onMounted} from 'vue'
-import {getIsInitialPasswordSet} from '@/api/modules/auth.js'
+import {getIsInitialPasswordSet, reqInitialPassword} from '@/api/modules/auth.js'
 import validators from '@/utils/validators.js'
 import {useNotification} from 'naive-ui'
 import {createNotificationConfig} from '@/utils/notification.js'
@@ -18,7 +18,7 @@ const password = ref('')
 const initialPassword = ref('')
 const confirmInitialPassword = ref('')
 
-function handleInitialPassword() {
+async function handleInitialPassword() {
   const res = validators.password(initialPassword.value)
   if (!res.success) {
     notification.error(createNotificationConfig('Error!', res.errMsg))
@@ -28,8 +28,13 @@ function handleInitialPassword() {
     notification.error(createNotificationConfig('Error!', 'The confirm password does not match the initial password. Please ensure both entries are identical'))
     return
   }
-  // TODO 发请求更新密码
-
+  const {code, data, message} = await reqInitialPassword(initialPassword.value)
+  if (code) {
+    notification.success(createNotificationConfig('Success!', data))
+    isInitialPasswordSet.value = true
+  } else {
+    notification.error(createNotificationConfig('Error!', message))
+  }
 }
 </script>
 

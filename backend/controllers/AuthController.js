@@ -6,10 +6,15 @@ function getIsInitialPasswordSet(req, resp) {
 }
 
 function initialPassword(req, resp) {
-    const {initialPassword} = req.body
+    const {initialPassword} = req.body || {}
     const res = validators.password(initialPassword)
     if (!res.success) return resp.fail(res.errMsg)
-    authService.initialPassword(initialPassword)
+    try {
+        authService.initialPassword(initialPassword)
+        return resp.success('Password initialization successful. Please log in')
+    } catch (err) {
+        return resp.fail(err.message)
+    }
 }
 
 module.exports = {

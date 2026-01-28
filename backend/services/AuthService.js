@@ -5,10 +5,9 @@ function getIsInitialPasswordSet() {
 }
 
 function initialPassword(initialPassword) {
-    if (authDao.findIsInitialPasswordSet()) {
-        // TODO
-        throw new Error('')
-    }
+    if (authDao.findIsInitialPasswordSet()) throw new Error('Initial password setup failed. Each user can only complete the first-time password setup once')
+    authDao.updatePassword(initialPassword)
+    authDao.updateIsInitialPasswordSet(true)
 }
 
 module.exports = {

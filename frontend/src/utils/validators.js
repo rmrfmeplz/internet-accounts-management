@@ -25,6 +25,10 @@ function validatePassword(password) {
         success: false,
         errMsg: 'Password length must be between 8 and 16 characters'
     }
+    if (!/^[A-Za-z0-9!@#$%^&*()_+\-=\[\]{}|;:,.?~]{8,16}$/.test(password)) return {
+        success: false,
+        errMsg: 'Password can only contain letters, numbers, and the following special characters: !@#$%^&*()_+-=[]{}|;:,.?~'
+    }
     const regexList = [
         /[A-Z]/,
         /[a-z]/,
