@@ -12,7 +12,7 @@ async function encryptPassword(plainPassword) {
 }
 
 async function initialPassword(initialPassword) {
-    if (authDao.findIsInitialPasswordSet()) throw new Error('Initial password setup failed. Each user can only complete the first-time password setup once')
+    if (authDao.findIsInitialPasswordSet()) throw new Error('初始密码设置失败，仅可完成一次首次密码设置')
     const hashedPassword = await encryptPassword(initialPassword)
     authDao.updatePassword(hashedPassword)
     authDao.updateIsInitialPasswordSet(true)
@@ -23,8 +23,8 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN
 
 async function login(username, password) {
     const auth = authDao.findAuth()
-    if (auth['username'] !== username) throw new Error('Sorry, the username or password you entered is incorrect. Please check and re-enter them')
-    if (!await bcrypt.compare(password, auth['password'])) throw new Error('Sorry, the username or password you entered is incorrect. Please check and re-enter them')
+    if (auth['username'] !== username) throw new Error('用户名或密码错误，请检查后重新输入')
+    if (!await bcrypt.compare(password, auth['password'])) throw new Error('用户名或密码错误，请检查后重新输入')
     const jwtPayload = {username: auth['username']}
     const token = jwt.sign(jwtPayload, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN})
     return {token, userInfo: {username: auth['username']}}

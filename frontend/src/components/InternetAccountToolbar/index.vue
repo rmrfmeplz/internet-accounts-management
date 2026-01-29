@@ -22,20 +22,20 @@ function onCancelAddInternetAccount() {
 
 async function onConfirmAddInternetAccount() {
   if (!validators.platformName(internetAccount.value.platformName)) {
-    notification.error(createNotificationConfig('Error!', 'Please enter the platform name'))
+    notification.error(createNotificationConfig('错误', '请输入平台名称'))
     return
   }
   if (!validators.account(internetAccount.value.account)) {
-    notification.error(createNotificationConfig('Error!', 'Please enter the corresponding account'))
+    notification.error(createNotificationConfig('错误', '请输入对应账号'))
     return
   }
   const {code, message} = await createInternetAccount(internetAccount.value)
   if (code) {
     await internetAccountsStore.fetchInternetAccounts()
     await platformIconMapsStore.fetchPlatformIconMaps()
-    notification.success(createNotificationConfig('Success!', `The account ${internetAccount.value.account} for platform ${internetAccount.value.platformName} has been saved`))
+    notification.success(createNotificationConfig('成功', `平台 ${internetAccount.value.platformName} 下的账号 ${internetAccount.value.account} 已保存`))
   } else {
-    notification.error(createNotificationConfig('Error!', message))
+    notification.error(createNotificationConfig('错误', message))
   }
   showAddInternetAccountModal.value = false
 }
@@ -51,11 +51,11 @@ function addInternetAccount() {
 
 function validatePlatformIconBeforeUpload(file) {
   if (!validators.platformIconType(file.file.type)) {
-    notification.error(createNotificationConfig('Error!', `Only supports uploading images in the formats of ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()}`))
+    notification.error(createNotificationConfig('错误', `仅支持上传 ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()} 格式的图片`))
     return false
   }
   if (!validators.platformIconSize(file.file.file.size)) {
-    notification.error(createNotificationConfig('Error!', `Only supports uploading images of ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB or smaller`))
+    notification.error(createNotificationConfig('错误', `仅支持上传 ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB 及以下的图片`))
     return false
   }
   const reader = new FileReader()
@@ -83,7 +83,7 @@ const uploadedPlatformIconSrc = ref('')
   <AppHeader/>
   <div class="internet-account-actions">
     <n-button type="primary" @click="addInternetAccount" class="internet-account-add-btn">
-      New Internet Account
+      新增互联网账号
     </n-button>
     <InternetAccountFilter/>
   </div>
@@ -97,17 +97,17 @@ const uploadedPlatformIconSrc = ref('')
       preset="dialog"
   >
     <n-flex vertical>
-      <n-input v-model:value="internetAccount.platformName" placeholder="Enter platform name" @blur="getPlatformIcon"/>
-      <n-input v-model:value="internetAccount.account" placeholder="Enter corresponding account"/>
-      <n-input v-model:value="internetAccount.remark" placeholder="Enter remarks (optional)"/>
+      <n-input v-model:value="internetAccount.platformName" placeholder="请输入平台名称" @blur="getPlatformIcon"/>
+      <n-input v-model:value="internetAccount.account" placeholder="请输入对应账号"/>
+      <n-input v-model:value="internetAccount.remark" placeholder="填写备注（选填）"/>
       <n-upload list-type="image-card" :max="1" :on-before-upload="validatePlatformIconBeforeUpload"
                 v-show="isUploadPlatformIconEntryVisible">
-        Upload platform icon (optional)
+        上传平台图标（选填）
       </n-upload>
       <n-image width="95" :src="uploadedPlatformIconSrc" v-show="!isUploadPlatformIconEntryVisible" preview-disabled/>
       <n-flex justify="end">
-        <n-button @click="onCancelAddInternetAccount">Cancel</n-button>
-        <n-button type="primary" @click="onConfirmAddInternetAccount">Confirm</n-button>
+        <n-button @click="onCancelAddInternetAccount">取消</n-button>
+        <n-button type="primary" @click="onConfirmAddInternetAccount">确认</n-button>
       </n-flex>
     </n-flex>
   </n-modal>
@@ -120,7 +120,7 @@ const uploadedPlatformIconSrc = ref('')
   width: 100%;
 
   .internet-account-add-btn {
-    margin-right: 15px;
+    margin-right: 30px;
   }
 }
 </style>

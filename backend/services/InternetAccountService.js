@@ -5,7 +5,7 @@ const platformIconMapDao = require('../dao/PlatformIconMapDao')
 function createInternetAccount(platformName, account, platformIcon, remark) {
     const internetAccounts = internetAccountDao.listAllInternetAccounts()
     const isDuplicate = internetAccounts.some(internetAccount => internetAccount['platformName'] === platformName && internetAccount['account'] === account)
-    if (isDuplicate) throw new Error(`Duplicate data detected: the account ${account} under platform ${platformName} already exists.`)
+    if (isDuplicate) throw new Error(`检测到重复数据：平台 ${platformName} 下的账号 ${account} 已存在`)
     const id = v4().toUpperCase()
     const createTime = Date.now()
     const updateTime = createTime
@@ -19,7 +19,7 @@ function listInternetAccounts() {
 
 function validateInternetAccountExists(id) {
     const internetAccount = internetAccountDao.findInternetAccountById(id)
-    if (!internetAccount) throw new Error(`Query failed: the record corresponding to ID ${id} does not exist.`)
+    if (!internetAccount) throw new Error(`查询失败：ID ${id} 对应的记录不存在`)
     return internetAccount
 }
 

@@ -11,7 +11,7 @@ async function initialPassword(req, resp) {
     if (!res.success) return resp.fail(res.errMsg)
     try {
         await authService.initialPassword(initialPassword)
-        return resp.success('Password initialization successful. Please log in')
+        return resp.success('密码初始化成功，请登录')
     } catch (err) {
         return resp.fail(err.message)
     }

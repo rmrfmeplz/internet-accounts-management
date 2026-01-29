@@ -20,15 +20,15 @@ function filterInternetAccounts() {
 <template>
   <div class="internet-account-filter-conditions">
     <div class="internet-account-filter-text-group">
-      <n-input placeholder="Filter by Platform"
+      <n-input placeholder="按平台筛选"
                clearable
                v-model:value="internetAccount.platformName"
                @input="filterInternetAccounts"/>
-      <n-input placeholder="Filter by Account"
+      <n-input placeholder="按账号筛选"
                clearable
                v-model:value="internetAccount.account"
                @input="filterInternetAccounts"/>
-      <n-input placeholder="Filter by Remarks"
+      <n-input placeholder="按备注筛选"
                clearable
                v-model:value="internetAccount.remark"
                @input="filterInternetAccounts"/>
@@ -36,14 +36,14 @@ function filterInternetAccounts() {
     <div class="internet-account-filter-datetime-group">
       <n-date-picker type="datetimerange" clearable
                      v-model:value="internetAccount.createTimeRange"
-                     start-placeholder="Start Creation Time"
+                     start-placeholder="创建时间开始"
                      @update:value="filterInternetAccounts"
-                     end-placeholder="End Creation Time"/>
+                     end-placeholder="创建时间结束"/>
       <n-date-picker type="datetimerange" clearable
                      v-model:value="internetAccount.updateTimeRange"
-                     start-placeholder="Start Update Time"
+                     start-placeholder="更新时间开始"
                      @update:value="filterInternetAccounts"
-                     end-placeholder="End Update Time"/>
+                     end-placeholder="更新时间结束"/>
     </div>
   </div>
 </template>
@@ -59,13 +59,13 @@ function filterInternetAccounts() {
   .internet-account-filter-text-group {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 15px;
+    grid-column-gap: 30px;
   }
 
   .internet-account-filter-datetime-group {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 15px;
+    grid-column-gap: 30px;
   }
 }
 </style>

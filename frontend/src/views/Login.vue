@@ -25,31 +25,31 @@ const confirmInitialPassword = ref('')
 async function handleInitialPassword() {
   const res = validators.password(initialPassword.value)
   if (!res.success) {
-    notification.error(createNotificationConfig('Error!', res.errMsg))
+    notification.error(createNotificationConfig('错误', res.errMsg))
     return
   }
   if (initialPassword.value !== confirmInitialPassword.value) {
-    notification.error(createNotificationConfig('Error!', 'The confirm password does not match the initial password. Please ensure both entries are identical'))
+    notification.error(createNotificationConfig('错误', '确认密码与原密码不一致，请确保两次输入相同'))
     return
   }
   const {code, data, message} = await reqInitialPassword(initialPassword.value)
   if (code) {
-    notification.success(createNotificationConfig('Success!', data))
+    notification.success(createNotificationConfig('成功', data))
     isInitialPasswordSet.value = true
   } else {
-    notification.error(createNotificationConfig('Error!', message))
+    notification.error(createNotificationConfig('错误', message))
   }
 }
 
 async function login() {
   const uRes = validators.username(username.value)
   if (!uRes.success) {
-    notification.error(createNotificationConfig('Error!', uRes.errMsg))
+    notification.error(createNotificationConfig('错误', uRes.errMsg))
     return
   }
   const pRes = validators.password(password.value)
   if (!pRes.success) {
-    notification.error(createNotificationConfig('Error!', pRes.errMsg))
+    notification.error(createNotificationConfig('错误', pRes.errMsg))
     return
   }
   const {code, data, message} = await reqLogin({username: username.value, password: password.value})
@@ -59,9 +59,9 @@ async function login() {
     localStorage.setItem('USER_INFO', JSON.stringify(userInfo))
     userStore.setLoginInfo(token, userInfo)
     await router.push('/home')
-    notification.success(createNotificationConfig('Success!', 'Login Successful!'))
+    notification.success(createNotificationConfig('成功', '登录成功'))
   } else {
-    notification.error(createNotificationConfig('Error!', message))
+    notification.error(createNotificationConfig('错误', message))
   }
   username.value = ''
   password.value = ''
@@ -72,36 +72,36 @@ async function login() {
 <template>
   <n-card embedded :bordered="false" class="n-card" v-if="isInitialPasswordSet">
     <n-form>
-      <n-form-item label="Username">
-        <n-input placeholder="Enter your username" v-model:value="username"/>
+      <n-form-item label="用户名">
+        <n-input placeholder="请输入用户名" v-model:value="username"/>
       </n-form-item>
-      <n-form-item label="Password">
-        <n-input placeholder="Enter your password"
+      <n-form-item label="密码">
+        <n-input placeholder="请输入密码"
                  v-model:value="password"
                  type="password"
                  :input-props="{autocomplete: 'off'}"/>
       </n-form-item>
       <n-form-item>
-        <n-button @click="login" type="primary">Login</n-button>
+        <n-button @click="login" type="primary">登录</n-button>
       </n-form-item>
     </n-form>
   </n-card>
   <n-card embedded :bordered="false" class="n-card" v-if="!isInitialPasswordSet">
     <n-form>
-      <n-form-item label="Initial Password">
-        <n-input placeholder="Create your initial password"
+      <n-form-item label="初始密码">
+        <n-input placeholder="设置您的初始密码"
                  v-model:value="initialPassword"
                  type="password"
                  :input-props="{autocomplete: 'off'}"/>
       </n-form-item>
-      <n-form-item label="Confirm Initial Password">
-        <n-input placeholder="Re-enter your initial password"
+      <n-form-item label="确认初始密码">
+        <n-input placeholder="再次输入您的初始密码"
                  v-model:value="confirmInitialPassword"
                  type="password"
                  :input-props="{autocomplete: 'off'}"/>
       </n-form-item>
       <n-form-item>
-        <n-button type="primary" @click="handleInitialPassword">Confirm Initialization</n-button>
+        <n-button type="primary" @click="handleInitialPassword">确认初始化</n-button>
       </n-form-item>
     </n-form>
   </n-card>

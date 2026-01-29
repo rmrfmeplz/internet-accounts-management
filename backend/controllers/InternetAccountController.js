@@ -4,7 +4,7 @@ const validators = require('../common/utils/validators')
 function createInternetAccount(req, resp) {
     const {platformName = '', account = '', platformIcon = '', remark = ''} = req.body || {}
     if (!validators.platformName(platformName) || !validators.account(account) || !validators.platformIcon(platformIcon) || !validators.remark(remark)) {
-        return resp.fail('Parameter error. Please check if the entered parameters are valid and complete.')
+        return resp.fail('参数错误，请检查输入的参数是否有效且完整')
     }
     if (platformIcon) {
         const res = validators.platformIconBase64(platformIcon)
@@ -34,7 +34,7 @@ function deleteInternetAccountById(req, resp) {
 function updateInternetAccountById(req, resp) {
     const {id = '', platformName = '', account = '', platformIcon = '', remark = ''} = req.body || {}
     if (!validators.internetAccountId(id) || !validators.platformName(platformName) || !validators.account(account) || !validators.platformIcon(platformIcon) || !validators.remark(remark)) {
-        return resp.fail('Parameter error. Please check if the entered parameters are valid and complete.')
+        return resp.fail('参数错误，请检查输入的参数是否有效且完整')
     }
     if (platformIcon) {
         const res = validators.platformIconBase64(platformIcon)

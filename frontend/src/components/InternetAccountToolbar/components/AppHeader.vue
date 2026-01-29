@@ -19,8 +19,8 @@ function logout() {
 
 <template>
   <header>
-    <span>Welcome {{ username }}</span>
-    <n-button @click="logout" quaternary type="warning">Logout</n-button>
+    <span>欢迎回来 {{ username }}</span>
+    <n-button @click="logout" quaternary type="warning">退出登录</n-button>
   </header>
 </template>
 

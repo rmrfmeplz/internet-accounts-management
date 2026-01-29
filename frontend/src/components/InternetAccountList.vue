@@ -19,10 +19,10 @@ platformIconMapsStore.fetchPlatformIconMaps()
 
 function deleteInternetAccount(internetAccount) {
   dialog.warning({
-    title: 'Warning!',
-    content: `Are you sure you want to delete the account ${internetAccount.account} under the platform ${internetAccount.platformName}?`,
-    positiveText: 'Confirm Deletion',
-    negativeText: 'Cancel',
+    title: '警告',
+    content: `确定要删除平台 ${internetAccount.platformName} 下的账号 ${internetAccount.account} 吗？`,
+    positiveText: '确认删除',
+    negativeText: '取消',
     closable: false,
     closeOnEsc: false,
     maskClosable: false,
@@ -63,31 +63,31 @@ function getPlatformIcon(platformName) {
 
 async function onConfirmEditInternetAccount() {
   if (!validators.platformName(internetAccount.value.platformName)) {
-    notification.error(createNotificationConfig('Error!', 'Please enter the platform name'))
+    notification.error(createNotificationConfig('错误', '请输入平台名称'))
     return
   }
   if (!validators.account(internetAccount.value.account)) {
-    notification.error(createNotificationConfig('Error!', 'Please enter the corresponding account'))
+    notification.error(createNotificationConfig('错误', '请输入对应账号'))
     return
   }
   const {code, message} = await updateInternetAccountByOd(internetAccount.value)
   if (code) {
     await internetAccountsStore.fetchInternetAccounts()
     await platformIconMapsStore.fetchPlatformIconMaps()
-    notification.success(createNotificationConfig('Success!', 'Successfully updated'))
+    notification.success(createNotificationConfig('成功', '更新成功'))
   } else {
-    notification.error(createNotificationConfig('Error!', message))
+    notification.error(createNotificationConfig('错误', message))
   }
   showEditInternetAccountModal.value = false
 }
 
 function validatePlatformIconBeforeUpload(file) {
   if (!validators.platformIconType(file.file.type)) {
-    notification.error(createNotificationConfig('Error!', `Only supports uploading images in the formats of ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()}`))
+    notification.error(createNotificationConfig('错误', `仅支持上传 ${ALLOWED_IMAGE_SUFFIXS.join(', ').toUpperCase()} 格式的图片`))
     return false
   }
   if (!validators.platformIconSize(file.file.file.size)) {
-    notification.error(createNotificationConfig('Error!', `Only supports uploading images of ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB or smaller`))
+    notification.error(createNotificationConfig('错误', `仅支持上传 ${ALLOWED_IMAGE_SIZE / 1024 / 1024} MB 及以下的图片`))
     return false
   }
   const reader = new FileReader()
@@ -101,18 +101,18 @@ function validatePlatformIconBeforeUpload(file) {
   <n-table :single-line="false">
     <thead>
     <tr>
-      <th>Platform</th>
-      <th>Account</th>
-      <th>Remarks</th>
-      <th>Creation Time</th>
-      <th>Update Time</th>
-      <th>Operations</th>
+      <th>平台</th>
+      <th>账号</th>
+      <th>备注</th>
+      <th>创建时间</th>
+      <th>更新时间</th>
+      <th>操作</th>
     </tr>
     </thead>
     <tbody>
     <tr v-if="!internetAccountsStore.internetAccounts.length">
       <td colspan="6">
-        <n-empty description="No internet accounts added">
+        <n-empty description="暂无已添加的互联网账号">
           <template #icon>
             <n-icon>
               <CallMissedOutlined/>
@@ -133,7 +133,7 @@ function validatePlatformIconBeforeUpload(file) {
         </n-flex>
       </td>
       <td>{{ internetAccount.account }}</td>
-      <td>{{ internetAccount.remark || "No remarks" }}</td>
+      <td>{{ internetAccount.remark || "无备注" }}</td>
       <td>
         <n-time :time="internetAccount.createTime"/>
       </td>
@@ -168,23 +168,23 @@ function validatePlatformIconBeforeUpload(file) {
       preset="dialog"
   >
     <n-form>
-      <n-form-item label="Edit Platform Name">
+      <n-form-item label="平台名称">
         <n-input v-model:value="internetAccount.platformName" placeholder=""/>
       </n-form-item>
-      <n-form-item label="Edit Corresponding Account">
+      <n-form-item label="对应账号">
         <n-input v-model:value="internetAccount.account" placeholder=""/>
       </n-form-item>
-      <n-form-item label="Edit Remarks">
+      <n-form-item label="备注">
         <n-input v-model:value="internetAccount.remark" placeholder=""/>
       </n-form-item>
-      <n-form-item label="Edit Platform Icon">
+      <n-form-item label="平台图标">
         <n-upload list-type="image-card" :max="1" :default-file-list="editInternetAccountDefaultFileList"
                   :on-before-upload="validatePlatformIconBeforeUpload"/>
       </n-form-item>
     </n-form>
     <n-flex justify="end">
-      <n-button @click="onCancelEditInternetAccount">Cancel</n-button>
-      <n-button @click="onConfirmEditInternetAccount" type="primary">Confirm</n-button>
+      <n-button @click="onCancelEditInternetAccount">取消</n-button>
+      <n-button @click="onConfirmEditInternetAccount" type="primary">确认</n-button>
     </n-flex>
   </n-modal>
 </template>

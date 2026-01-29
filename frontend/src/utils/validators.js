@@ -21,15 +21,15 @@ function validatePlatformIconSize(size) {
 function validatePassword(password) {
     if (typeof password !== 'string' || !password.trim()) return {
         success: false,
-        errMsg: 'Password cannot be empty or contain only whitespace'
+        errMsg: '密码不能为空且不能仅包含空白字符'
     }
     if (password.length < 8 || password.length > 16) return {
         success: false,
-        errMsg: 'Password length must be between 8 and 16 characters'
+        errMsg: '密码长度必须在8-16个字符之间'
     }
     if (!/^[A-Za-z0-9!@#$%^&*()_+\-=\[\]{}|;:,.?~]{8,16}$/.test(password)) return {
         success: false,
-        errMsg: 'Password can only contain letters, numbers, and the following special characters: !@#$%^&*()_+-=[]{}|;:,.?~'
+        errMsg: '密码仅支持字母、数字和以下特殊字符：!@#$%^&*()_+-=[]{}|;:,.?~'
     }
     const regexList = [
         /[A-Z]/,
@@ -42,7 +42,7 @@ function validatePassword(password) {
     }, 0)
     if (matchCount < 3) return {
         success: false,
-        errMsg: 'Password must contain at least three of the following character types: uppercase letters (A-Z), lowercase letters (a-z), numeric digits (0-9), and allowed special characters (!@#$%^&*()_+-=[]{}|;:,.?~)'
+        errMsg: '密码必须至少包含大写字母、小写字母、数字、允许的特殊字符中的三种'
     }
     return {success: true, errMsg: ''}
 }
@@ -50,15 +50,15 @@ function validatePassword(password) {
 function validateUsername(username) {
     if (typeof username !== 'string' || !username.trim()) return {
         success: false,
-        errMsg: 'Username cannot be empty or contain only whitespace'
+        errMsg: '用户名不能为空且不能仅包含空白字符'
     }
     if (username.length < 5 || username.length > 15) return {
         success: false,
-        errMsg: 'Username length must be between 5 and 15 characters'
+        errMsg: '用户名长度必须在5-15个字符之间'
     }
-    if (!/^[A-Za-z0-9_]{5,16}$/.test(username)) return {
+    if (!/^[A-Za-z0-9_]{5,15}$/.test(username)) return {
         success: false,
-        errMsg: 'Username can only contain uppercase/lowercase letters, numbers (0-9), and underscore (_)'
+        errMsg: '用户名仅支持大小写字母、数字和下划线(_)'
     }
     return {success: true, errMsg: ''}
 }

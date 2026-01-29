@@ -4,6 +4,14 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: "欣意吉祥宋";
+    src: url("../fonts/XinYiJiXiangSong.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 body {
-    font-family: Eczar, Georgia, 'Times New Roman', Times, serif;
+    font-family: 欣意吉祥宋, serif;
 }
