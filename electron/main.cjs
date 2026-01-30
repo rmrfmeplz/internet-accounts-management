@@ -6,7 +6,7 @@ let mainWindow
 
 async function createMainWindow() {
     Menu.setApplicationMenu(null)
-    mainWindow = new BrowserWindow({minWidth: 1000, minHeight: 600, title: '管账易'})
+    mainWindow = new BrowserWindow({minWidth: 1000, minHeight: 600, title: '管账易', icon: './icon.png'})
     await mainWindow.loadURL('http://localhost:5173')
     mainWindow.on('closed', () => {
         mainWindow = null
