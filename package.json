@@ -1,0 +1,10 @@
+{
+  "name": "internet-accounts-management",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"cd backend && node server.js\" \"cd frontend && npm run dev\" \"cd electron && npm run dev\" --names \"BACKEND,FRONTEND,ELECTRON\" --prefix-colors \"green,blue,yellow\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
