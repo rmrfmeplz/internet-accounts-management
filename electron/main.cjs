@@ -5,9 +5,9 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 let mainWindow
 
 async function createMainWindow() {
+    Menu.setApplicationMenu(null)
     mainWindow = new BrowserWindow({minWidth: 1000, minHeight: 600, title: '管账易'})
     await mainWindow.loadURL('http://localhost:5173')
-    Menu.setApplicationMenu(null)
     mainWindow.on('closed', () => {
         mainWindow = null
     })
