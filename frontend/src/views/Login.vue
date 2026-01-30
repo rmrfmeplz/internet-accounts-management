@@ -78,6 +78,7 @@ async function login() {
       <n-form-item label="密码">
         <n-input placeholder="请输入密码"
                  v-model:value="password"
+                 :class="password ? 'font-times' : ''"
                  type="password"
                  :input-props="{autocomplete: 'off'}"/>
       </n-form-item>
@@ -91,12 +92,14 @@ async function login() {
       <n-form-item label="初始密码">
         <n-input placeholder="设置您的初始密码"
                  v-model:value="initialPassword"
+                 :class="initialPassword ? 'font-times' : ''"
                  type="password"
                  :input-props="{autocomplete: 'off'}"/>
       </n-form-item>
       <n-form-item label="确认初始密码">
         <n-input placeholder="再次输入您的初始密码"
                  v-model:value="confirmInitialPassword"
+                 :class="confirmInitialPassword ? 'font-times' : ''"
                  type="password"
                  :input-props="{autocomplete: 'off'}"/>
       </n-form-item>
@@ -115,5 +118,9 @@ async function login() {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
+}
+
+.font-times {
+  font-family: "Times New Roman", Times, serif;
 }
 </style>
