@@ -2,7 +2,7 @@
   "name": "internet-accounts-management",
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently \"cd backend && node server.js\" \"cd frontend && npm run dev\" \"cd electron && npm run dev\" --names \"BACKEND,FRONTEND,ELECTRON\" --prefix-colors \"green,blue,yellow\"",
+    "start": "concurrently \"cd backend && node server.js\" \"cd frontend && npm run dev\" \"cd electron && npm run dev\" --names \"BACKEND,FRONTEND,ELECTRON\" --prefix-colors \"green,blue,yellow\"",
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../electron && npm install"
   },
   "devDependencies": {
