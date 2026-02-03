@@ -43,7 +43,7 @@ internet-accounts-management/ # 项目根目录
 ### 第一步：获取代码
 
 ```text
-git clone https://github.com/rmrfmeplz/internet-accounts-management.git
+git clone git@github.com:rmrfmeplz/internet-accounts-management.git
 cd internet-accounts-management
 ```
 
