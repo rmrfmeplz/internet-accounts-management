@@ -54,7 +54,7 @@ cd internet-accounts-management
 
 创建`.env`文件，并填入以下内容：
 
-`JWT_SECRET=你的自定义强密钥`
+`JWT_SECRET='你的自定义强密钥'`
 
 💡 密钥建议：长度大于 16 位，混合大小写字母、数字及符号。
 
