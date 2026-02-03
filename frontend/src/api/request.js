@@ -4,7 +4,7 @@ import {createNotificationConfig} from '@/utils/notification.js'
 import router from '@/router/index.js'
 
 const request = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: 'http://localhost:9528/api',
     timeout: 10000
 })
 

@@ -9,6 +9,9 @@ import {NaiveUiResolver} from 'unplugin-vue-components/resolvers'
 // https://vite.dev/config/
 // noinspection JSUnusedGlobalSymbols
 export default defineConfig({
+    server: {
+        port: 9527
+    },
     plugins: [
         vue(),
         AutoImport({
