@@ -66,7 +66,7 @@ cd internet-accounts-management
 
 `JWT_SECRET='你的自定义强密钥'`
 
-💡 密钥建议：长度大于 16 位，混合大小写字母、数字及符号。
+💡 密钥建议：`node -e "console.log(require('crypto').randomBytes(16).toString('hex'))"`
 
 ### 第三步：一键安装依赖
 
