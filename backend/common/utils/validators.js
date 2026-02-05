@@ -15,7 +15,8 @@ function validatePlatformIconType(data) {
     const isPNG = data.length >= 8 && data[0] === 0x89 && data[1] === 0x50 && data[2] === 0x4E && data[3] === 0x47 && data[4] === 0x0D && data[5] === 0x0A && data[6] === 0x1A && data[7] === 0x0A
     const isGIF = data.length >= 6 && data[0] === 0x47 && data[1] === 0x49 && data[2] === 0x46 && data[3] === 0x38 && (data[4] === 0x37 || data[4] === 0x39) && data[5] === 0x61
     const isWebP = data.length >= 12 && data[0] === 0x52 && data[1] === 0x49 && data[2] === 0x46 && data[3] === 0x46 && data[8] === 0x57 && data[9] === 0x45 && data[10] === 0x42 && data[11] === 0x50
-    return isJPG || isPNG || isGIF || isWebP
+    const isICO = data.length >= 4 && data[0] === 0x00 && data[1] === 0x00 && data[2] === 0x01 && data[3] === 0x00
+    return isJPG || isPNG || isGIF || isWebP || isICO
 }
 
 function validatePlatformIconSize(size) {
@@ -44,7 +45,7 @@ function validateInternetAccountId(id) {
 }
 
 function validatePlatformIconBase64(platformIcon) {
-    const regexStr = `^data:image\\/(${platformIconUploadConstants.ALLOWED_IMAGE_SUFFIXS.join('|')});base64,(.+)$`
+    const regexStr = `^data:image\\/(${platformIconUploadConstants.ALLOWED_IMAGE_TYPES.join('|').replaceAll('image/', '')});base64,(.+)$`
     const matchResult = platformIcon.match(new RegExp(regexStr))
     if (!matchResult) return {
         success: false,

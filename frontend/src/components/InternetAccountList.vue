@@ -128,6 +128,7 @@ function validatePlatformIconBeforeUpload(file) {
                     :src="platformIconMapsStore.platformIconMaps[internetAccount.platformName]"
                     size="small"
                     round
+                    style="background-color: transparent"
           />
           <span>{{ internetAccount.platformName }}</span>
         </n-flex>
