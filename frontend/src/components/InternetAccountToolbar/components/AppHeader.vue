@@ -9,8 +9,6 @@ const username = userStore.userInfo['username']
 
 function logout() {
   userStore.clearLoginInfo()
-  localStorage.removeItem('USER_TOKEN')
-  localStorage.removeItem('USER_INFO')
   $notification.success(createNotificationConfig('Success!', 'Logout Successful!'))
   router.push('/login')
 }

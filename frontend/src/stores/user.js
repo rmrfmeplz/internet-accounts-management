@@ -10,12 +10,16 @@ export const useUserStore = defineStore('user', () => {
         token.value = newToken
         userInfo.value = newUserInfo
         isLogin.value = true
+        localStorage.setItem('USER_TOKEN', newToken)
+        localStorage.setItem('USER_INFO', JSON.stringify(newUserInfo))
     }
 
     const clearLoginInfo = () => {
         token.value = ''
         userInfo.value = {}
         isLogin.value = false
+        localStorage.removeItem('USER_TOKEN')
+        localStorage.removeItem('USER_INFO')
     }
 
     return {

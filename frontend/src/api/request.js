@@ -23,8 +23,6 @@ request.interceptors.response.use(
             $notification.error(createNotificationConfig('Error!', message))
             const userStore = useUserStore()
             userStore.clearLoginInfo()
-            localStorage.removeItem('USER_TOKEN')
-            localStorage.removeItem('USER_INFO')
             await router.push('/login')
             return Promise.reject(new Error(message))
         }

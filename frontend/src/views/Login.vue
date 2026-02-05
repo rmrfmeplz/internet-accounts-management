@@ -55,8 +55,6 @@ async function login() {
   const {code, data, message} = await reqLogin({username: username.value, password: password.value})
   if (code) {
     const {token, userInfo} = data
-    localStorage.setItem('USER_TOKEN', token)
-    localStorage.setItem('USER_INFO', JSON.stringify(userInfo))
     userStore.setLoginInfo(token, userInfo)
     await router.push('/home')
     notification.success(createNotificationConfig('成功', '登录成功'))
